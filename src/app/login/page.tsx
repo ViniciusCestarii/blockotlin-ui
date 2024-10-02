@@ -22,13 +22,14 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useTransition } from 'react'
 import { loginSchema } from '@/lib/auth/schema'
 
 const LoginPage = () => {
   const { login } = useAuth()
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   const [isPending, startTransition] = useTransition()
 
@@ -45,7 +46,8 @@ const LoginPage = () => {
       const success = await login(values)
 
       if (success) {
-        router.push('/dashboard')
+        const next = searchParams.get('next')
+        router.push(next ?? '/dashboard')
       }
     })
   }
