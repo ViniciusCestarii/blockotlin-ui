@@ -9,7 +9,9 @@ const ShoppingNavbar = () => {
     <MainHeader className="flex items-center gap-4">
       <Logo className="flex-shrink-0" />
       <Suspense
-        fallback={<div className="flex-1 bg-primary rounded-md h-10" />}
+        fallback={
+          <div className="flex-1 bg-primary rounded-md h-10 max-w-lg" />
+        }
       >
         <SearchProduct className="flex-1 max-w-lg" />
       </Suspense>
