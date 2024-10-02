@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Navbar from './navbar'
+import Navbar from './(other)/navbar'
 import Footer from './footer'
 import { Roboto } from 'next/font/google'
 import { AuthProvider } from '@/context/auth-context'
@@ -26,11 +26,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <AuthProvider>
         <body className={`${roboto.variable} antialiased dark font-roboto`}>
-          <Navbar />
-          <div className="flex flex-col min-h-screen-minus-header">
-            {children}
-          </div>
-          <Footer />
+          {children}
         </body>
       </AuthProvider>
     </html>

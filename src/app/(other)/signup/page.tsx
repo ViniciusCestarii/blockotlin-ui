@@ -48,7 +48,7 @@ const SignupPage = () => {
       const success = await signup(values)
 
       if (success) {
-        router.push('/dashboard')
+        router.push('/')
       }
     })
   }

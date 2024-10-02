@@ -8,7 +8,21 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    container: {
+      screens: {
+        sm: '40em',
+        md: '48em',
+        lg: '64em',
+        xl: '80em',
+      }
+    },
     extend: {
+      screens: {
+        sm: '40em',
+        md: '48em',
+        lg: '64em',
+        xl: '80em',
+      },
       height: {
         'screen-minus-header': 'calc(100vh - 3.5rem)',
       },

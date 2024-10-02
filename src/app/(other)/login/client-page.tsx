@@ -48,7 +48,7 @@ const ClientLoginPage = () => {
 
       if (success) {
         const next = searchParams.get('next')
-        router.push(next ?? '/dashboard')
+        router.push(next ?? '/')
       }
     })
   }
