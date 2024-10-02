@@ -11,31 +11,41 @@ const Navbar = () => {
         <Bitcoin className="h-6 w-6" />
         <span className="ml-2 text-lg font-bold">Blockotlin</span>
       </Link>
-      <nav className="ml-auto flex gap-4 sm:gap-6">
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="/"
-        >
-          Home
-        </Link>
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="#"
-        >
-          Markets
-        </Link>
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="#"
-        >
-          Portfolio
-        </Link>
-        <Link
-          className="text-sm font-medium hover:underline underline-offset-4"
-          href="#"
-        >
-          News
-        </Link>
+      <nav className="ml-auto">
+        <ul className="flex gap-4 sm:gap-6">
+          <li>
+            <Link
+              className="text-sm font-medium hover:underline underline-offset-4"
+              href="/"
+            >
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="text-sm font-medium hover:underline underline-offset-4"
+              href="#"
+            >
+              Markets
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="text-sm font-medium hover:underline underline-offset-4"
+              href="#"
+            >
+              Portfolio
+            </Link>
+          </li>
+          <li>
+            <Link
+              className="text-sm font-medium hover:underline underline-offset-4"
+              href="#"
+            >
+              News
+            </Link>
+          </li>
+        </ul>
       </nav>
       <div className="flex gap-2 ml-4">
         <Button size="icon" variant="ghost">
