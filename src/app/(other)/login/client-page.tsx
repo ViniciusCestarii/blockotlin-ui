@@ -54,7 +54,7 @@ const ClientLoginPage = () => {
   }
 
   return (
-    <div className="flex h-screen-minus-header items-center justify-center bg-gradient-to-br via-background from-background to-muted">
+    <div className="flex h-screen-minus-header items-center justify-center sm:bg-gradient-to-br via-background from-background to-muted">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Log In</CardTitle>
