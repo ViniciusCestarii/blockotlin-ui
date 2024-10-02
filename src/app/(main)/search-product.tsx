@@ -1,12 +1,15 @@
 'use client'
 
+import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { cn } from '@/lib/utils'
+import { Search } from 'lucide-react'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import React from 'react'
 
 interface SearchProductProps extends React.HTMLAttributes<HTMLFormElement> {}
 
-const SearchProduct = (props: SearchProductProps) => {
+const SearchProduct = ({ className, ...props }: SearchProductProps) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -31,7 +34,14 @@ const SearchProduct = (props: SearchProductProps) => {
   }
 
   return (
-    <form {...props} onSubmit={handleSubmit}>
+    <form
+      {...props}
+      onSubmit={handleSubmit}
+      className={cn(
+        'flex ring-offset-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 rounded-md',
+        className,
+      )}
+    >
       <label htmlFor="search" className="sr-only">
         Search for products
       </label>
@@ -41,8 +51,12 @@ const SearchProduct = (props: SearchProductProps) => {
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="Search for products"
-        className="w-full bg-primary text-background placeholder:text-background/80"
+        className="flex-1 bg-primary text-background placeholder:text-background/80 border-none rounded-r-none focus-visible:ring-0"
       />
+      <Button type="submit" className="rounded-l-none">
+        <span className="sr-only">Search</span>
+        <Search className="size-5" />
+      </Button>
     </form>
   )
 }

@@ -13,8 +13,8 @@ const config: Config = {
         sm: '40em',
         md: '48em',
         lg: '64em',
-        xl: '80em',
-      }
+        xl: '74em',
+      },
     },
     extend: {
       screens: {
