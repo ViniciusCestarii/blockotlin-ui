@@ -1,3 +1,12 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  "extends": [
+    "next/core-web-vitals",
+    "next/typescript",
+    "@rocketseat/eslint-config/react"],
+    "rules": {
+      "@typescript-eslint/no-unused-vars": [
+        "warn", 
+        { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
+      ]
+    }
 }

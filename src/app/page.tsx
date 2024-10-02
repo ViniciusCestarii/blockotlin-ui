@@ -1,101 +1,260 @@
-import Image from "next/image";
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import {
+  TableHead,
+  TableRow,
+  TableHeader,
+  TableCell,
+  TableBody,
+  Table,
+} from '@/components/ui/table'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import {
+  ArrowUpDown,
+  ChevronRight,
+  Search,
+  TrendingUp,
+  TrendingDown,
+  DollarSign,
+} from 'lucide-react'
+import Link from 'next/link'
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <main className="flex-1">
+      <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex flex-col items-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
+                Track Crypto in Real-Time
+              </h1>
+              <p className="mx-auto max-w-[700px] text-gray-300 md:text-xl">
+                Stay updated with the latest cryptocurrency prices, market
+                trends, and portfolio performance.
+              </p>
+            </div>
+            <div className="w-full max-w-sm space-y-2">
+              <form className="flex space-x-2">
+                <label htmlFor="search" className="sr-only">
+                  Search cryptocurrencies
+                </label>
+                <Input
+                  className="max-w-lg flex-1 bg-white/10 text-white"
+                  placeholder="Search cryptocurrencies"
+                  type="search"
+                  id="search"
+                />
+                <Button type="submit" variant="secondary">
+                  <Search className="h-4 w-4 mr-2" />
+                  Search
+                </Button>
+              </form>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+      </section>
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-background">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8">
+            Market Overview
+          </h2>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Total Market Cap
+                </CardTitle>
+                <DollarSign className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">$2.14T</div>
+                <p className="text-xs text-muted-foreground">
+                  +3.2% from last 24h
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  24h Volume
+                </CardTitle>
+                <TrendingUp className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">$78.5B</div>
+                <p className="text-xs text-muted-foreground">
+                  +5.7% from last 24h
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Bitcoin Dominance
+                </CardTitle>
+                <TrendingDown className="h-4 w-4 text-muted-foreground" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">42.1%</div>
+                <p className="text-xs text-muted-foreground">
+                  -0.8% from last 24h
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
+      <section className="w-full py-12 md:py-24 lg:py-32">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8">
+            Top Cryptocurrencies
+          </h2>
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">Rank</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Price</TableHead>
+                  <TableHead>24h %</TableHead>
+                  <TableHead className="text-right">Market Cap</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-medium">1</TableCell>
+                  <TableCell>Bitcoin</TableCell>
+                  <TableCell>$34,567.89</TableCell>
+                  <TableCell className="text-green-600">+2.34%</TableCell>
+                  <TableCell className="text-right">$653,456,789,012</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">2</TableCell>
+                  <TableCell>Ethereum</TableCell>
+                  <TableCell>$2,345.67</TableCell>
+                  <TableCell className="text-red-600">-1.23%</TableCell>
+                  <TableCell className="text-right">$278,901,234,567</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">3</TableCell>
+                  <TableCell>Cardano</TableCell>
+                  <TableCell>$1.23</TableCell>
+                  <TableCell className="text-green-600">+3.45%</TableCell>
+                  <TableCell className="text-right">$39,012,345,678</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">4</TableCell>
+                  <TableCell>Binance Coin</TableCell>
+                  <TableCell>$345.67</TableCell>
+                  <TableCell className="text-green-600">+0.78%</TableCell>
+                  <TableCell className="text-right">$53,456,789,012</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-medium">5</TableCell>
+                  <TableCell>Solana</TableCell>
+                  <TableCell>$89.01</TableCell>
+                  <TableCell className="text-red-600">-2.34%</TableCell>
+                  <TableCell className="text-right">$24,567,890,123</TableCell>
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
+          <div className="mt-8 flex justify-end">
+            <Button>
+              View All
+              <ArrowUpDown className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </section>
+      <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-background">
+        <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8">
+            Latest Crypto News
+          </h2>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <Card>
+              <CardHeader>
+                <CardTitle>Bitcoin Surges Past $35,000</CardTitle>
+                <CardDescription>5 hours ago</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>
+                  Bitcoin&apos;s price has surged past $35,000, reaching its
+                  highest level in 18 months. Analysts attribute the rise to
+                  increased institutional adoption and positive market
+                  sentiment.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Ethereum 2.0 Upgrade on Track</CardTitle>
+                <CardDescription>1 day ago</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>
+                  The Ethereum Foundation has announced that the Ethereum 2.0
+                  upgrade is progressing as planned. The transition to
+                  proof-of-stake is expected to significantly improve network
+                  scalability and efficiency.
+                </p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>New Crypto Regulations Proposed</CardTitle>
+                <CardDescription>2 days ago</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p>
+                  Lawmakers have proposed new regulations aimed at providing
+                  clearer guidelines for cryptocurrency businesses. The proposed
+                  framework aims to balance innovation with consumer protection.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+          <div className="mt-8 flex justify-center">
+            <Button variant="outline" className="text-primary">
+              Read More News
+              <ChevronRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </section>
+      <section className="w-full py-12 md:py-24 lg:py-32 ">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="flex flex-col items-center space-y-4 text-center">
+            <div className="space-y-2">
+              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
+                Start Your Crypto Journey Today
+              </h2>
+              <p className="mx-auto max-w-[700px] text-gray-300 md:text-xl">
+                Join thousands of traders and investors who trust Blockotlin for
+                real-time updates and market insights.
+              </p>
+            </div>
+            <div className="w-full max-w-sm pt-4">
+              <Button
+                type="submit"
+                variant="secondary"
+                className="w-full"
+                asChild
+              >
+                <Link href="/signup">Sign Up for Free</Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  )
 }
