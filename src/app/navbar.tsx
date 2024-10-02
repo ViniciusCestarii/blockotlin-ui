@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button'
+import UserAvatar from '@/components/user/avatar'
 import { Bell, Bitcoin, Menu } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
@@ -36,14 +37,20 @@ const Navbar = () => {
           News
         </Link>
       </nav>
-      <Button className="ml-4" size="icon" variant="ghost">
-        <Bell className="h-4 w-4" />
-        <span className="sr-only">Notifications</span>
-      </Button>
-      <Button className="ml-2 lg:hidden" size="icon" variant="ghost">
-        <Menu className="h-4 w-4" />
-        <span className="sr-only">Menu</span>
-      </Button>
+      <div className="flex gap-2 ml-4">
+        <Button size="icon" variant="ghost">
+          <Bell className="h-4 w-4" />
+          <span className="sr-only">Notifications</span>
+        </Button>
+        <button>
+          <span className="sr-only">User</span>
+          <UserAvatar />
+        </button>
+        <Button size="icon" variant="ghost" className="lg:hidden">
+          <Menu className="h-4 w-4" />
+          <span className="sr-only">Menu</span>
+        </Button>
+      </div>
     </header>
   )
 }

@@ -3,6 +3,7 @@ import './globals.css'
 import Navbar from './navbar'
 import Footer from './footer'
 import { Roboto } from 'next/font/google'
+import { AuthProvider } from '@/context/auth-context'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -23,11 +24,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${roboto.variable} antialiased dark font-roboto`}>
-        <Navbar />
-        <div className="flex flex-col min-h-screen">{children}</div>
-        <Footer />
-      </body>
+      <AuthProvider>
+        <body className={`${roboto.variable} antialiased dark font-roboto`}>
+          <Navbar />
+          <div className="flex flex-col min-h-screen">{children}</div>
+          <Footer />
+        </body>
+      </AuthProvider>
     </html>
   )
 }
