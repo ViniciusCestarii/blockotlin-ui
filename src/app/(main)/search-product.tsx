@@ -3,9 +3,17 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
+import axios from 'axios'
 import { Search } from 'lucide-react'
 import { usePathname, useSearchParams, useRouter } from 'next/navigation'
-import React from 'react'
+import React, { useEffect } from 'react'
+
+type RecommendationsReturnType = {
+  q: string
+  suggested_queries: {
+    q: string
+  }[]
+}
 
 interface SearchProductProps extends React.HTMLAttributes<HTMLFormElement> {}
 
@@ -15,6 +23,29 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
   const searchParams = useSearchParams()
 
   const [search, setSearch] = React.useState(searchParams.get('search') ?? '')
+  const [recommendations, setRecommendations] = React.useState<string[]>([])
+
+  console.log(recommendations)
+
+  // todo use https://ui.shadcn.com/docs/components/combobox to show recommendations
+
+  useEffect(() => {
+    const fetchRecommendations = async () => {
+      if (!search) setRecommendations([])
+      try {
+        const response = await axios.get<RecommendationsReturnType>(
+          `https://http2.mlstatic.com/resources/sites/MLB/autosuggest?showFilters=true&limit=6&api_version=2&q=${search}`,
+        )
+        setRecommendations(
+          response.data.suggested_queries.map((query) => query.q),
+        )
+      } catch (error) {
+        console.error(error)
+      }
+    }
+
+    fetchRecommendations()
+  }, [search])
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
