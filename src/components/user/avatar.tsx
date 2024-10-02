@@ -12,10 +12,15 @@ const UserAvatar = () => {
     .join('')
 
   return (
-    <Avatar className="size-10">
-      <AvatarImage src={auth?.avatar} alt="foto de perfil" />
-      <AvatarFallback>{initials ?? <User className="size-5" />}</AvatarFallback>
-    </Avatar>
+    <button>
+      <span className="sr-only">User</span>
+      <Avatar className="size-10">
+        <AvatarImage src={auth?.avatar} alt="foto de perfil" />
+        <AvatarFallback>
+          {initials ?? <User className="size-5" />}
+        </AvatarFallback>
+      </Avatar>
+    </button>
   )
 }
 
