@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
 import ClientLoginPage from './client-page'
 
-const LoginPag = () => {
+const LoginPage = () => {
   return (
     <Suspense>
       <ClientLoginPage />
@@ -9,4 +9,4 @@ const LoginPag = () => {
   )
 }
 
-export default LoginPag
+export default LoginPage
