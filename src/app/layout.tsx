@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Navbar from './(other)/navbar'
-import Footer from './footer'
 import { Roboto } from 'next/font/google'
 import { AuthProvider } from '@/context/auth-context'
 
