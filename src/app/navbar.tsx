@@ -1,5 +1,4 @@
 import { Button } from '@/components/ui/button'
-import UserAvatar from '@/components/user/avatar'
 import UserNavbarOptions from '@/components/user/navbar-options'
 import { Bell, Bitcoin, Menu } from 'lucide-react'
 import Link from 'next/link'
@@ -15,7 +14,7 @@ const Navbar = () => {
       <nav className="ml-auto flex gap-4 sm:gap-6">
         <Link
           className="text-sm font-medium hover:underline underline-offset-4"
-          href="#"
+          href="/"
         >
           Home
         </Link>

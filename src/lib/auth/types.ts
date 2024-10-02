@@ -6,7 +6,10 @@ export type Authenticate = {
 export type Account = {
   id: number
   email: string
-  name: string
+  firstName: string
+  lastName: string
   role: string
   avatar?: string
 }
+
+export type CreateAccount = Omit<Account, 'id' | 'role'>

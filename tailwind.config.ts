@@ -9,6 +9,12 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      height: {
+        'screen-minus-header': 'calc(100vh - 3.5rem)',
+      },
+      minHeight: {
+        'screen-minus-header': 'calc(100vh - 3.5rem)',
+      },
       fontFamily: {
         roboto: 'var(--font-roboto)',
       },

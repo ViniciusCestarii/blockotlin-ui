@@ -6,10 +6,9 @@ import { User } from 'lucide-react'
 
 const UserAvatar = () => {
   const { auth } = useAuth()
-  const initials = auth?.name
-    .split(' ')
-    .map((n) => n[0])
-    .join('')
+  const initials = auth
+    ? auth?.firstName?.charAt(0) + auth?.lastName?.charAt(0)
+    : null
 
   return (
     <button>

@@ -1,5 +1,5 @@
 import apiClient from '../axios'
-import { Authenticate, Account } from './types'
+import { Authenticate, Account, CreateAccount } from './types'
 
 export const login = async (
   auth: Authenticate,
@@ -9,6 +9,17 @@ export const login = async (
     return response.data
   } catch (error) {
     console.error('Login error:', error)
+  }
+}
+
+export const signup = async (
+  account: CreateAccount,
+): Promise<Account | undefined> => {
+  try {
+    const response = await apiClient.post('/signup', account)
+    return response.data
+  } catch (error) {
+    console.error('Signup error:', error)
   }
 }
 

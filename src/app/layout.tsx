@@ -27,7 +27,9 @@ export default function RootLayout({
       <AuthProvider>
         <body className={`${roboto.variable} antialiased dark font-roboto`}>
           <Navbar />
-          <div className="flex flex-col min-h-screen">{children}</div>
+          <div className="flex flex-col min-h-screen-minus-header">
+            {children}
+          </div>
           <Footer />
         </body>
       </AuthProvider>
