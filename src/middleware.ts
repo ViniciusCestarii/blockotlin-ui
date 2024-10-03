@@ -1,12 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyToken } from './lib/auth/fetch'
 
-const protectedRoutes = new Set(['/cart'])
+const protectedRoutes = new Set([] as string[])
 const registerRoutes = new Set(['/signup', '/login'])
 
 export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname
   const isProtectedRoute = protectedRoutes.has(path)
+  const isRegisterRoute = registerRoutes.has(path)
+
+  if (!isProtectedRoute && !isRegisterRoute) {
+    return NextResponse.next()
+  }
 
   const authorized = await verifyToken()
 
@@ -16,8 +21,6 @@ export default async function middleware(req: NextRequest) {
 
     return NextResponse.redirect(loginUrl)
   }
-
-  const isRegisterRoute = registerRoutes.has(path)
 
   if (isRegisterRoute && authorized) {
     return NextResponse.redirect('/')
