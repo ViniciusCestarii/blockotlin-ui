@@ -1,5 +1,5 @@
 import React from 'react'
-import { Product as ProductType } from '../types'
+import { Product as ProductType } from '../../lib/product/types'
 import Image from 'next/image'
 
 interface ProductProps {
@@ -19,7 +19,12 @@ const Product = ({ product }: ProductProps) => {
       <div className="px-3 py-2">
         <h3
           title={product.title}
-          className="h-6 text-sm text-ellipsis whitespace-nowrap overflow-hidden"
+          style={{
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            display: '-webkit-box',
+          }}
+          className="max-h-8 leading-4 text-sm text-ellipsis overflow-hidden"
         >
           {product.title}
         </h3>

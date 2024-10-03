@@ -1,6 +1,6 @@
+import Product from '@/app/(main)/product'
+import { fetchProducts } from '@/lib/product/fetch'
 import React from 'react'
-import Product from './product'
-import { fetchProducts } from '../fetch'
 
 interface ProductListProps {
   search: string
