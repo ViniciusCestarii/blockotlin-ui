@@ -5,8 +5,9 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import axios from 'axios'
 import { Search } from 'lucide-react'
-import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
+import { useQueryState } from 'nuqs'
+import { searchParamsParsers } from './search-params'
 
 type RecommendationsReturnType = {
   q: string
@@ -18,11 +19,11 @@ type RecommendationsReturnType = {
 interface SearchProductProps extends React.HTMLAttributes<HTMLFormElement> {}
 
 const SearchProduct = ({ className, ...props }: SearchProductProps) => {
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
-
-  const [search, setSearch] = React.useState(searchParams.get('search') ?? '')
+  const [nuqsSearch, setNuqsSearch] = useQueryState(
+    'search',
+    searchParamsParsers.search,
+  )
+  const [search, setSearch] = React.useState(nuqsSearch)
   const [recommendations, setRecommendations] = React.useState<string[]>([])
 
   console.log(recommendations)
@@ -53,15 +54,11 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
     const trimmedSearch = search.trim()
 
     if (!trimmedSearch) {
-      router.push(pathname, { scroll: false })
+      setNuqsSearch(null)
       return
     }
 
-    if (trimmedSearch === searchParams.get('search')) {
-      return
-    }
-
-    router.push(`${pathname}?search=${trimmedSearch}`, { scroll: false })
+    setNuqsSearch(trimmedSearch)
   }
 
   return (
