@@ -8,7 +8,7 @@ interface ProductProps {
 
 const Product = ({ product }: ProductProps) => {
   return (
-    <article className="border rounded-md overflow-hidden">
+    <article className="border rounded-md overflow-hidden h-full">
       <Image
         src={product.image}
         alt={product.title}

@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { Product } from './types'
+import React from 'react'
 
-export const fetchProducts = async (search?: string) => {
+export const fetchProducts = React.cache(async (search?: string) => {
   try {
     // change to apiClient to use the correct api
     // the fakestoreapi.com doesn't have a search endpoint
@@ -19,4 +20,4 @@ export const fetchProducts = async (search?: string) => {
   } catch (error) {
     console.error('Login error:', error)
   }
-}
+})
