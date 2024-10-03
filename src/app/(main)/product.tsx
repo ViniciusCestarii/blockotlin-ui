@@ -10,7 +10,7 @@ interface ProductProps {
 const Product = ({ product }: ProductProps) => {
   return (
     <Link href={`/product/${product.id}`} className="group">
-      <article className="border rounded-md overflow-hidden h-full">
+      <article className="rounded-md overflow-hidden h-full">
         <Image
           src={product.image}
           alt={product.title}

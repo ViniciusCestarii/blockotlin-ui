@@ -24,13 +24,16 @@ export async function FeaturedProductList({
         delay: 2000,
         stopOnInteraction: true,
       }}
+      opts={{
+        dragFree: true,
+      }}
       className="w-full"
     >
-      <CarouselContent className="-ml-1">
+      <CarouselContent className="-ml-3">
         {products?.map((product) => (
           <CarouselItem
             key={product.id}
-            className="pl-2 basis-1/3 sm:basis-1/4 lg:basis-1/6"
+            className="pl-3 basis-1/3 sm:basis-1/4 lg:basis-1/6"
           >
             <Product product={product} />
           </CarouselItem>
