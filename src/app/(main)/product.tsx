@@ -2,6 +2,7 @@ import React from 'react'
 import { Product as ProductType } from '../../lib/product/types'
 import Image from 'next/image'
 import Link from 'next/link'
+import { formatPrice } from '@/lib/format'
 
 interface ProductProps {
   product: ProductType
@@ -32,10 +33,7 @@ const Product = ({ product }: ProductProps) => {
           </h3>
           <span className="font-bold text-3xl">
             <span className="sr-only">Price</span>
-            {product.price.toLocaleString('pt', {
-              style: 'currency',
-              currency: 'BRL',
-            })}
+            {formatPrice(product.price)}
           </span>
         </div>
       </article>

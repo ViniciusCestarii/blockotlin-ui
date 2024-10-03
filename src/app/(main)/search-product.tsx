@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/style/utils'
 import axios from 'axios'
 import { Search } from 'lucide-react'
 import React, { useEffect } from 'react'

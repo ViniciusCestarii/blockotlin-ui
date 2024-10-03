@@ -21,3 +21,17 @@ export const fetchProducts = React.cache(async (search?: string) => {
     console.error('Login error:', error)
   }
 })
+
+export const fetchProduct = React.cache(async (id: string) => {
+  try {
+    // change to apiClient to use the correct api
+    // the fakestoreapi.com doesn't have a search endpoint
+    const response = await axios.get<Product>(
+      `https://fakestoreapi.com/products/${id}`,
+    )
+
+    return response.data
+  } catch (error) {
+    console.error('Login error:', error)
+  }
+})
