@@ -15,7 +15,7 @@ const ProductList = async ({ search }: ProductListProps) => {
 
   if (!products || products.length === 0) {
     return (
-      <Card className="max-w-lg mx-auto pt-6">
+      <Card className="max-w-lg mx-auto mt-6">
         <CardHeader className="flex flex-col items-center">
           <HeartCrack size={48} />
           <p className="text-center">

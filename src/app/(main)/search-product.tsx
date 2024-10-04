@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/style/utils'
 import axios from 'axios'
 import { Search, SearchX } from 'lucide-react'
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useQueryState } from 'nuqs'
 import { searchParamsParsers } from './search-params'
 
@@ -27,7 +27,8 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
   const [isInputOnFocus, setIsInputOnFocus] = React.useState(false)
   const [recommendations, setRecommendations] = React.useState<string[]>([])
 
-  // todo use https://ui.shadcn.com/docs/components/combobox to show recommendations
+  const inputRef = useRef<HTMLInputElement>(null)
+  const submitRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const fetchRecommendations = async () => {
@@ -64,8 +65,18 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-
+    submitRef.current?.blur()
     updateSearchParam(search)
+  }
+
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      e.preventDefault()
+      updateSearchParam(search)
+      setIsInputOnFocus(false)
+
+      inputRef.current?.blur()
+    }
   }
 
   return (
@@ -86,6 +97,8 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
       <div className="flex-1 flex relative">
         <Input
           id="search"
+          ref={inputRef}
+          onKeyDown={handleInputKeyDown}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Procurar produtos"
@@ -124,7 +137,12 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
             ))}
           </ul>
         )}
-        <Button type="submit" className="rounded-l-none" aria-label="procurar">
+        <Button
+          ref={submitRef}
+          type="submit"
+          className="rounded-l-none"
+          aria-label="procurar"
+        >
           <Search className="size-5" />
         </Button>
       </div>
