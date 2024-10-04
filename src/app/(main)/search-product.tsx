@@ -94,7 +94,7 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
         {search && (
           <ul
             className={cn(
-              'absolute z-10 top-[calc(100%-0.25rem)] left-0 w-full bg-background border border-primary border-t-0 rounded-b-md text-sm opacity-0 pointer-events-none',
+              'absolute z-10 top-[calc(100%-0.25rem)] left-0 w-[calc(100%+0.5rem)] -ml-[0.25rem] bg-background border-2 border-ring border-t-0 rounded-b-md text-sm opacity-0 pointer-events-none',
               isInputOnFocus && 'opacity-100 pointer-events-auto',
             )}
           >
