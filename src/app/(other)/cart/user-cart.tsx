@@ -23,11 +23,11 @@ const UserCart = () => {
         <p className="max-w-xl mx-auto px-2 py-2 text-center">
           <User className="inline" />{' '}
           <Link className="font-semibold underline" href="/signup">
-            Registre-se
+            Crie sua conta
           </Link>{' '}
-          ou faça{' '}
-          <Link className="font-semibold underline" href="/signup">
-            login
+          ou{' '}
+          <Link className="font-semibold underline" href="/login">
+            entre
           </Link>{' '}
           para aproveitar as nossas ofertas exclusivas
         </p>
