@@ -12,7 +12,7 @@ const UserAvatar = () => {
 
   return (
     <button>
-      <span className="sr-only">User</span>
+      <span className="sr-only">Usuário</span>
       <Avatar className="size-10">
         <AvatarImage src={auth?.avatar} alt="foto de perfil" />
         <AvatarFallback>

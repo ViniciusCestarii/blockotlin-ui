@@ -82,8 +82,7 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
         placeholder="Procurar produtos"
         className="flex-1 bg-primary text-background placeholder:text-background/80 border-none rounded-r-none focus-visible:ring-0"
       />
-      <Button type="submit" className="rounded-l-none">
-        <span className="sr-only">Search</span>
+      <Button type="submit" className="rounded-l-none" aria-label="procurar">
         <Search className="size-5" />
       </Button>
     </form>
