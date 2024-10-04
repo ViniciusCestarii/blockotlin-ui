@@ -20,7 +20,7 @@ const UserCart = () => {
             <ShoppingBasket className="mx-auto size-12 md:size-24" />
           </CardHeader>
         </Card>
-        <p className="max-w-xl mx-auto px-2 py-2">
+        <p className="max-w-xl mx-auto px-2 py-2 text-center">
           <User className="inline" />{' '}
           <Link className="font-semibold underline" href="/signup">
             Registre-se
