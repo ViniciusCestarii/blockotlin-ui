@@ -15,7 +15,7 @@ const ProductSkeleton = ({ className, ...props }: ProductSkeletonProps) => {
     <div
       {...props}
       className={cn(
-        'space-y-2 pb-2 lg:pb-3 animate-in fade-in ease-step-end duration-500',
+        'space-y-2 pb-[0.55rem] sm:pb-1 lg:pb-3 animate-in fade-in ease-step-end duration-500',
         className,
       )}
     >
