@@ -6,7 +6,7 @@ const Login = () => {
   return (
     <Button size="xs" variant="outline" asChild>
       <Link href="/login" className="capitalize">
-        Log in
+        Entre
       </Link>
     </Button>
   )

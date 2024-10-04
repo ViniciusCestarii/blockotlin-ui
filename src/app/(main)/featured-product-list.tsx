@@ -35,7 +35,7 @@ export async function FeaturedProductList({
             key={product.id}
             className="pl-3 basis-1/3 sm:basis-1/4 lg:basis-1/6"
           >
-            <Product product={product} />
+            <Product product={product} size="sm" />
           </CarouselItem>
         ))}
       </CarouselContent>

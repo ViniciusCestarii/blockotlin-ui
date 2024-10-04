@@ -16,14 +16,14 @@ export default function HomePage({
     <main className="container mx-auto px-4">
       {!search && (
         <section>
-          <h2 className="text-3xl font-bold">Featured Products</h2>
+          <h2 className="text-3xl font-bold">Produtos destaque</h2>
           <Suspense fallback={<p>Loading...</p>}>
             <FeaturedProductList />
           </Suspense>
         </section>
       )}
       <section>
-        <h2 className="text-3xl font-bold">All Products</h2>
+        <h2 className="text-3xl font-bold">Produtos</h2>
         <Suspense fallback={<p>Loading...</p>}>
           <ProductList search={search} />
         </Suspense>

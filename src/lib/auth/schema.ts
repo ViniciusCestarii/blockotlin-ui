@@ -1,22 +1,25 @@
 import { z } from 'zod'
 
-const passwordSchema = z.string().min(8)
+const passwordSchema = z
+  .string()
+  .min(8, 'Senha deve ter no mínimo 8 caracteres')
+
+const emailSchema = z.string().email('Email inválido')
 
 export const loginSchema = z.object({
-  email: z.string().email(),
+  email: emailSchema,
   password: passwordSchema,
 })
 
 export const signupSchema = z
   .object({
-    email: z.string().email(),
+    email: emailSchema,
     password: passwordSchema,
     confirmPassword: passwordSchema,
-    firstName: z.string(),
-    lastName: z.string(),
+    firstName: z.string().min(2, 'Nome deve ter no mínimo 2 caracteres'),
+    lastName: z.string().min(2, 'Sobrenome deve ter no mínimo 2 caracteres'),
   })
-  .refine(({ confirmPassword, password }) => {
-    if (confirmPassword !== password) {
-      return { confirmPassword: 'The passwords did not match' }
-    }
+  .refine((data) => data.confirmPassword === data.password, {
+    path: ['confirmPassword'],
+    message: 'Senhas não estão iguais',
   })

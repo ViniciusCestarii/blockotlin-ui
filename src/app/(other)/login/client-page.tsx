@@ -57,8 +57,8 @@ const ClientLoginPage = () => {
     <div className="flex h-screen-minus-header items-center justify-center sm:bg-gradient-to-br via-background from-background to-muted">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Log In</CardTitle>
-          <CardDescription>Access your account</CardDescription>
+          <CardTitle className="text-2xl font-bold">Entrar</CardTitle>
+          <CardDescription>Acesse sua conta</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -86,7 +86,7 @@ const ClientLoginPage = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Senha</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
@@ -99,19 +99,19 @@ const ClientLoginPage = () => {
                 )}
               />
               <Button type="submit" className="w-full" disabled={isPending}>
-                Log in
+                Entrar
               </Button>
             </form>
           </Form>
         </CardContent>
         <CardFooter className="text-center text-sm text-muted-foreground">
-          Don&apos;t have an account?
+          Não possue uma conta?
           <Link
             href="/signup"
             className="font-medium underline hover:text-primary ml-1"
             prefetch={false}
           >
-            Sign up
+            Crie a sua agora!
           </Link>
         </CardFooter>
       </Card>

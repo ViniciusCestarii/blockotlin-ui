@@ -14,7 +14,7 @@ const MainNav = (props: MainNavProps) => {
           <Button size="icon" variant="ghost" asChild>
             <Link href="/cart">
               <ShoppingCart className="h-4 w-4" />
-              <span className="sr-only">Cart</span>
+              <span className="sr-only">Carrinho</span>
             </Link>
           </Button>
         </li>

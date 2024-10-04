@@ -6,7 +6,7 @@ const Signup = () => {
   return (
     <Button size="xs" asChild>
       <Link href="/signup" className="capitalize">
-        Sign up
+        Crie sua conta
       </Link>
     </Button>
   )

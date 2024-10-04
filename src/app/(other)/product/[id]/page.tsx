@@ -46,7 +46,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
               <StarIcon className="w-5 h-5 fill-muted stroke-muted-foreground" />
               <span className="text-muted-foreground text-sm">
-                4.3 (123 reviews)
+                4.3 (123 avaliações)
               </span>
             </div>
             <div className="text-4xl font-bold">
@@ -54,36 +54,38 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
           </div>
           <Button size="lg" className="w-full">
-            Add to Cart
+            Adicionar ao carrinho
           </Button>
         </div>
       </div>
       <div className="mt-12 md:mt-16 lg:mt-20 grid gap-8 lg:gap-12">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold">
-            Product Specifications
+            Detalhes do Produto
           </h2>
-          <div className="mt-4 grid sm:grid-cols-2 gap-4">
+          <dl className="mt-4 grid sm:grid-cols-2 gap-4">
             <div className="grid gap-2">
-              <div className="font-medium">Material</div>
-              <div>60% combed ringspun cotton, 40% polyester</div>
+              <dt className="font-medium">Material</dt>
+              <dd>60% algodão penteado ringspun, 40% poliéster</dd>
             </div>
             <div className="grid gap-2">
-              <div className="font-medium">Size</div>
-              <div>S, M, L, XL</div>
+              <dt className="font-medium">Tamanho</dt>
+              <dd>P, M, G, GG</dd>
             </div>
             <div className="grid gap-2">
-              <div className="font-medium">Color</div>
-              <div>Black, White, Blue</div>
+              <dt className="font-medium">Cor</dt>
+              <dd>Preto, Branco, Azul</dd>
             </div>
             <div className="grid gap-2">
-              <div className="font-medium">Care Instructions</div>
-              <div>Machine wash cold, tumble dry low</div>
+              <dt className="font-medium">Instruções de Cuidados</dt>
+              <dd>Lavar à máquina em água fria, secar em baixa temperatura</dd>
             </div>
-          </div>
+          </dl>
         </div>
         <div>
-          <h2 className="text-2xl md:text-3xl font-bold">Customer Reviews</h2>
+          <h2 className="text-2xl md:text-3xl font-bold">
+            Avaliações dos clientes
+          </h2>
           <div className="mt-4 grid gap-6">
             <div className="flex gap-4">
               <Avatar className="w-10 h-10 border">
@@ -102,9 +104,9 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </div>
                 </div>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  I&apos;ve been wearing this t-shirt for a few weeks now and
-                  it&apos;s quickly become one of my favorites. The fabric is
-                  soft and breathable, and the fit is perfect. Highly recommend!
+                  Esta é a melhor camiseta que eu já comprei. O tecido é macio e
+                  confortável. Além disso, a entrega foi super rápida e o
+                  produto é de alta qualidade.
                 </p>
               </div>
             </div>
@@ -125,9 +127,8 @@ export default async function ProductPage({ params }: ProductPageProps) {
                   </div>
                 </div>
                 <p className="text-muted-foreground text-sm leading-relaxed">
-                  I&apos;m really impressed with the quality of this t-shirt.
-                  The fabric is durable and the design is stylish. I&apos;ve
-                  washed it several times and it still looks great.
+                  A camiseta é muito confortável e o tamanho é perfeito para
+                  mim. Eu recomendo.
                 </p>
               </div>
             </div>

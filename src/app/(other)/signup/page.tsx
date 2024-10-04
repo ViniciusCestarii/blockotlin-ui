@@ -57,8 +57,10 @@ const SignupPage = () => {
     <div className="flex h-screen-minus-header items-center justify-center sm:bg-gradient-to-br via-background from-background to-muted">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">Sign Up</CardTitle>
-          <CardDescription>Create your account</CardDescription>
+          <CardTitle className="text-2xl font-bold">Criar conta</CardTitle>
+          <CardDescription>
+            Crie sua conta para comprar na nossa loja
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -69,7 +71,7 @@ const SignupPage = () => {
                   name="firstName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>First name</FormLabel>
+                      <FormLabel>Primeiro nome</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="John"
@@ -86,7 +88,7 @@ const SignupPage = () => {
                   name="lastName"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Last name</FormLabel>
+                      <FormLabel>Sobrenome</FormLabel>
                       <FormControl>
                         <Input
                           placeholder="Doe"
@@ -122,7 +124,7 @@ const SignupPage = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Senha</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
@@ -139,7 +141,7 @@ const SignupPage = () => {
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Confirm password</FormLabel>
+                    <FormLabel>Confirmar senha</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
@@ -152,19 +154,19 @@ const SignupPage = () => {
                 )}
               />
               <Button type="submit" className="w-full" disabled={isPending}>
-                Sign in
+                Criar conta
               </Button>
             </form>
           </Form>
         </CardContent>
         <CardFooter className="text-center text-sm text-muted-foreground">
-          Already have an account?
+          Já possui uma conta?
           <Link
             href="/login"
             className="font-medium underline hover:text-primary ml-1"
             prefetch={false}
           >
-            Log in
+            Entre!
           </Link>
         </CardFooter>
       </Card>
