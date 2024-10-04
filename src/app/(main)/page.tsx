@@ -2,6 +2,8 @@ import { searchParamsCache } from './search-params'
 import ProductList from './product-list'
 import { Suspense } from 'react'
 import { FeaturedProductList } from './featured-product-list'
+import MainContainer from '@/components/system/main-container'
+import TypographyH2 from '@/components/ui/typography-h2'
 
 export default function HomePage({
   searchParams,
@@ -13,10 +15,10 @@ export default function HomePage({
   const { search } = parsedSearchParams
 
   return (
-    <main className="container mx-auto px-4">
+    <MainContainer>
       {!search && (
         <section>
-          <h2 className="text-3xl font-bold">Produtos destaque</h2>
+          <TypographyH2>Produtos destaque</TypographyH2>
           <Suspense fallback={<p>Loading...</p>}>
             <FeaturedProductList />
           </Suspense>
@@ -29,17 +31,17 @@ export default function HomePage({
         </Suspense>
       </section>
       {/* <section>
-        <h2 className="text-3xl font-bold">Featured Electronics</h2>
+        <TypographyH2>Featured Electronics</TypographyH2>
         <Suspense fallback={<p>Loading...</p>}>
           <FeaturedProductList search="2" />
         </Suspense>
       </section>
       <section>
-        <h2 className="text-3xl font-bold">Featured Jewerly</h2>
+        <TypographyH2>Featured Jewerly</TypographyH2>
         <Suspense fallback={<p>Loading...</p>}>
           <FeaturedProductList search="gold" />
         </Suspense>
       </section> */}
-    </main>
+    </MainContainer>
   )
 }
