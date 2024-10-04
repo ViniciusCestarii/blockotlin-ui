@@ -23,6 +23,9 @@ const config: Config = {
         lg: '64em',
         xl: '80em',
       },
+      transitionTimingFunction: {
+        'step-end': 'step-end',
+      },
       height: {
         'screen-minus-header': 'calc(100vh - 3.5rem)',
       },
