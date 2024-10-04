@@ -10,10 +10,10 @@ const ShoppingNavbar = () => {
       <Logo className="flex-shrink-0 w-fit sm:w-auto pt-2 sm:pt-0" />
       <Suspense
         fallback={
-          <div className="flex-1 bg-primary rounded-md h-10 max-w-lg" />
+          <div className="sm:flex-1 bg-primary rounded-md h-10 max-w-lg" />
         }
       >
-        <SearchProduct className="flex-1 max-w-lg" />
+        <SearchProduct className="sm:flex-1 max-w-lg" />
       </Suspense>
       <MainNav className="ml-auto flex-shrink-0" />
     </MainHeader>

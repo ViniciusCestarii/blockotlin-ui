@@ -67,7 +67,7 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
       {...props}
       onSubmit={handleSubmit}
       className={cn(
-        'flex ring-offset-background focus-within:outline-none sm:focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 rounded-md',
+        'flex ring-offset-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 rounded-md',
         className,
       )}
     >
