@@ -23,7 +23,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <AuthProvider>
-        <body className={`${roboto.variable} antialiased dark font-roboto`}>
+        <body
+          className={`${roboto.variable} antialiased dark font-roboto overflow-x-hidden`}
+        >
           {children}
         </body>
       </AuthProvider>

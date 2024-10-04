@@ -1,7 +1,10 @@
 import { searchParamsCache } from './search-params'
 import ProductList from './product-list'
 import { Suspense } from 'react'
-import { FeaturedProductList } from './featured-product-list'
+import {
+  FeaturedProductList,
+  FeaturedProductListSkeleton,
+} from './featured-product-list'
 import MainContainer from '@/components/system/main-container'
 import TypographyH2 from '@/components/ui/typography-h2'
 
@@ -19,7 +22,7 @@ export default function HomePage({
       {!search && (
         <section>
           <TypographyH2>Produtos em destaque</TypographyH2>
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<FeaturedProductListSkeleton />}>
             <FeaturedProductList />
           </Suspense>
         </section>

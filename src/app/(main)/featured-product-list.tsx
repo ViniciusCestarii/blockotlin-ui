@@ -8,6 +8,7 @@ import {
 } from '@/components/ui/carousel'
 import { fetchProducts } from '@/lib/product/fetch'
 import Product from './product'
+import ProductSkeleton from './product-skeleton'
 
 interface FeaturedProductListProps {
   search?: string
@@ -44,3 +45,14 @@ export async function FeaturedProductList({
     </Carousel>
   )
 }
+
+export const FeaturedProductListSkeleton = () => (
+  <div className="flex gap-2">
+    <ProductSkeleton className="w-52 aspect-[1/1.2] hidden sm:block" />
+    <ProductSkeleton className="w-52 aspect-[1/1.2] hidden lg:block" />
+    <ProductSkeleton className="w-52 aspect-[1/1.2] hidden lg:block" />
+    <ProductSkeleton className="w-52 aspect-[1/1.2]" />
+    <ProductSkeleton className="w-52 aspect-[1/1.2]" />
+    <ProductSkeleton className="w-52 aspect-[1/1.2]" />
+  </div>
+)
