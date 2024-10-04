@@ -6,8 +6,8 @@ import SearchProduct from './search-product'
 
 const ShoppingNavbar = () => {
   return (
-    <MainHeader className="flex items-center gap-4">
-      <Logo className="flex-shrink-0" />
+    <MainHeader className="flex flex-col sm:flex-row h-36 sm:h-14 sm:items-center gap-2 sm:gap-4">
+      <Logo className="flex-shrink-0 w-fit sm:w-auto pt-2 sm:pt-0" />
       <Suspense
         fallback={
           <div className="flex-1 bg-primary rounded-md h-10 max-w-lg" />

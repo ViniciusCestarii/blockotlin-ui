@@ -8,6 +8,7 @@ import { Search } from 'lucide-react'
 import React, { useEffect } from 'react'
 import { useQueryState } from 'nuqs'
 import { searchParamsParsers } from './search-params'
+import { Separator } from '@/components/ui/separator'
 
 type RecommendationsReturnType = {
   q: string
@@ -66,7 +67,7 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
       {...props}
       onSubmit={handleSubmit}
       className={cn(
-        'flex ring-offset-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 rounded-md',
+        'flex ring-offset-background focus-within:outline-none sm:focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 rounded-md',
         className,
       )}
     >

@@ -18,7 +18,7 @@ export default function HomePage({
     <MainContainer>
       {!search && (
         <section>
-          <TypographyH2>Produtos destaque</TypographyH2>
+          <TypographyH2>Produtos em destaque</TypographyH2>
           <Suspense fallback={<p>Loading...</p>}>
             <FeaturedProductList />
           </Suspense>
