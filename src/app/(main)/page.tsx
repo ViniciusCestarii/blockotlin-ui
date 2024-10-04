@@ -1,5 +1,5 @@
 import { searchParamsCache } from './search-params'
-import ProductList from './product-list'
+import ProductList, { ProductListSkeleton } from './product-list'
 import { Suspense } from 'react'
 import {
   FeaturedProductList,
@@ -29,7 +29,7 @@ export default function HomePage({
       )}
       <section>
         <h2 className="text-3xl font-bold">Produtos</h2>
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<ProductListSkeleton />}>
           <ProductList search={search} />
         </Suspense>
       </section>
