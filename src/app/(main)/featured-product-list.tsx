@@ -47,7 +47,7 @@ export async function FeaturedProductList({
 }
 
 export const FeaturedProductListSkeleton = () => (
-  <div className="flex gap-2">
+  <div className="flex space-x-3">
     <ProductSkeleton className="w-52 aspect-[1/1.2] hidden sm:block" />
     <ProductSkeleton className="w-52 aspect-[1/1.2] hidden lg:block" />
     <ProductSkeleton className="w-52 aspect-[1/1.2] hidden lg:block" />
