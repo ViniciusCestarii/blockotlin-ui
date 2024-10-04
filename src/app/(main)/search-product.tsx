@@ -8,7 +8,6 @@ import { Search } from 'lucide-react'
 import React, { useEffect } from 'react'
 import { useQueryState } from 'nuqs'
 import { searchParamsParsers } from './search-params'
-import { Separator } from '@/components/ui/separator'
 
 type RecommendationsReturnType = {
   q: string

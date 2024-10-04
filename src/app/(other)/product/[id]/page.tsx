@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { StarIcon } from 'lucide-react'
-import { fetchProduct } from '@/lib/product/fetch'
+import { fetchProduct, fetchProducts } from '@/lib/product/fetch'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { formatPrice } from '@/lib/format'
@@ -12,6 +12,17 @@ interface ProductPageProps {
   }
 }
 
+export async function generateStaticParams() {
+  const products = await fetchProducts()
+
+  if (!products) {
+    return []
+  }
+
+  return products.map((post) => ({
+    id: String(post.id),
+  }))
+}
 export default async function ProductPage({ params }: ProductPageProps) {
   const product = await fetchProduct(params.id)
 
