@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/style/utils'
 import axios from 'axios'
-import { Search } from 'lucide-react'
+import { Search, SearchX } from 'lucide-react'
 import React, { useEffect } from 'react'
 import { useQueryState } from 'nuqs'
 import { searchParamsParsers } from './search-params'
@@ -24,9 +24,8 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
     searchParamsParsers.search,
   )
   const [search, setSearch] = React.useState(nuqsSearch)
+  const [isInputOnFocus, setIsInputOnFocus] = React.useState(false)
   const [recommendations, setRecommendations] = React.useState<string[]>([])
-
-  console.log(recommendations)
 
   // todo use https://ui.shadcn.com/docs/components/combobox to show recommendations
 
@@ -38,7 +37,11 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
           `https://http2.mlstatic.com/resources/sites/MLB/autosuggest?showFilters=true&limit=6&api_version=2&q=${search}`,
         )
         setRecommendations(
-          response.data.suggested_queries.map((query) => query.q),
+          response.data.suggested_queries.length > 0
+            ? response.data.suggested_queries
+                .map((query) => query.q)
+                .filter((query, index, self) => self.indexOf(query) === index)
+            : [],
         )
       } catch (error) {
         console.error(error)
@@ -48,9 +51,7 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
     fetchRecommendations()
   }, [search])
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
+  const updateSearchParam = (search: string) => {
     const trimmedSearch = search.trim()
 
     if (!trimmedSearch) {
@@ -61,10 +62,18 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
     setNuqsSearch(trimmedSearch)
   }
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    updateSearchParam(search)
+  }
+
   return (
     <form
       {...props}
       onSubmit={handleSubmit}
+      onFocus={() => setIsInputOnFocus(true)}
+      onBlur={() => setIsInputOnFocus(false)}
       className={cn(
         'flex ring-offset-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 rounded-md',
         className,
@@ -73,17 +82,52 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
       <label htmlFor="search" className="sr-only">
         Procurar produtos
       </label>
-      <Input
-        id="search"
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Procurar produtos"
-        className="flex-1 bg-primary text-background placeholder:text-background/80 border-none rounded-r-none focus-visible:ring-0"
-      />
-      <Button type="submit" className="rounded-l-none" aria-label="procurar">
-        <Search className="size-5" />
-      </Button>
+
+      <div className="flex-1 flex relative">
+        <Input
+          id="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Procurar produtos"
+          className="flex-1 bg-primary text-background placeholder:text-background/80 border-none rounded-r-none focus-visible:ring-0"
+        />
+        {search && (
+          <ul
+            className={cn(
+              'absolute z-10 top-[calc(100%-0.25rem)] left-0 w-full bg-background border border-primary border-t-0 rounded-b-md text-sm opacity-0 pointer-events-none',
+              isInputOnFocus && 'opacity-100 pointer-events-auto',
+            )}
+          >
+            {recommendations.length === 0 && (
+              <li className="py-3 px-4">
+                <SearchX className="inline size-5 mr-2 flex-shrink-0" /> Nenhum
+                resultado encontrado
+              </li>
+            )}
+            {recommendations.map((recommendation) => (
+              <li key={recommendation} className="p-1 w-full">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="w-full justify-start h-fit py-2"
+                  aria-label={`procurar por "${recommendation}"`}
+                  onClick={() => {
+                    setSearch(recommendation)
+                    setIsInputOnFocus(false)
+                    updateSearchParam(recommendation)
+                  }}
+                >
+                  <Search className="inline size-5 mr-2 flex-shrink-0" />
+                  {recommendation}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <Button type="submit" className="rounded-l-none" aria-label="procurar">
+          <Search className="size-5" />
+        </Button>
+      </div>
     </form>
   )
 }
