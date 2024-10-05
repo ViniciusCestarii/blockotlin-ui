@@ -28,7 +28,7 @@ export default function HomePage({
         </section>
       )}
       <section>
-        <h2 className="text-3xl font-bold">Produtos</h2>
+        <TypographyH2>Produtos</TypographyH2>
         <Suspense fallback={<ProductListSkeleton />}>
           <ProductList search={search} />
         </Suspense>
