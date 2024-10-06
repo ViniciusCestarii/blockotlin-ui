@@ -1,37 +1,44 @@
-import axios from 'axios'
-import { Product } from './types'
-import React from 'react'
+'use server'
 
+import { Product, ProductListResponse } from './types'
+import React from 'react'
 export const fetchProducts = React.cache(async (search?: string) => {
   try {
-    // change to apiClient to use the correct api
-    // the fakestoreapi.com doesn't have a search endpoint
-    const response = await axios.get<Product[]>(
-      'https://fakestoreapi.com/products',
-      {
-        params: { q: search },
-      },
+    const url = new URL(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/public-api/v1/product`,
     )
-    if (!search) return response.data
 
-    return response.data.filter((product) =>
-      product.title.toLowerCase().includes(search.toLowerCase()),
-    )
+    if (search) {
+      url.searchParams.append('name', search)
+    }
+
+    const response = await fetch(url.toString())
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch products: ${response.statusText}`)
+    }
+
+    const data: ProductListResponse = await response.json()
+    return data.products
   } catch (error) {
-    console.error('Login error:', error)
+    console.error('Fetch error:', error)
   }
 })
 
 export const fetchProduct = React.cache(async (id: string) => {
   try {
-    // change to apiClient to use the correct api
-    // the fakestoreapi.com doesn't have a search endpoint
-    const response = await axios.get<Product>(
-      `https://fakestoreapi.com/products/${id}`,
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/public-api/v1/product/${id}`,
     )
 
-    return response.data
+    if (!response.ok) {
+      throw new Error(`Error fetching product: ${response.statusText}`)
+    }
+
+    const product: Product = await response.json()
+
+    return product
   } catch (error) {
-    console.error('Login error:', error)
+    console.error('Error fetching product:', error)
   }
 })

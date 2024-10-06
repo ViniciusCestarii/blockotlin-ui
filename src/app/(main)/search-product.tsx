@@ -3,7 +3,6 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/style/utils'
-import axios from 'axios'
 import { Search, SearchX } from 'lucide-react'
 import React, { useEffect, useRef } from 'react'
 import { useQueryState } from 'nuqs'
@@ -34,12 +33,20 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
     const fetchRecommendations = async () => {
       if (!search) setRecommendations([])
       try {
-        const response = await axios.get<RecommendationsReturnType>(
+        const response = await fetch(
           `https://http2.mlstatic.com/resources/sites/MLB/autosuggest?showFilters=true&limit=6&api_version=2&q=${search}`,
         )
+
+        if (!response.ok) {
+          throw new Error(
+            `Failed to fetch recommendations: ${response.statusText}`,
+          )
+        }
+
+        const data = (await response.json()) as RecommendationsReturnType
         setRecommendations(
-          response.data.suggested_queries.length > 0
-            ? response.data.suggested_queries
+          data.suggested_queries.length > 0
+            ? data.suggested_queries
                 .map((query) => query.q)
                 .filter((query, index, self) => self.indexOf(query) === index)
             : [],
