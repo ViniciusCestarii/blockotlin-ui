@@ -4,16 +4,10 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/style/utils'
 import { Search, SearchX } from 'lucide-react'
-import React, { useEffect, useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import { useQueryState } from 'nuqs'
 import { searchParamsParsers } from './search-params'
-
-type RecommendationsReturnType = {
-  q: string
-  suggested_queries: {
-    q: string
-  }[]
-}
+import useRecommendations from '@/hooks/use-recommendations'
 
 interface SearchProductProps extends React.HTMLAttributes<HTMLFormElement> {}
 
@@ -22,42 +16,13 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
     'search',
     searchParamsParsers.search,
   )
-  const [search, setSearch] = React.useState(nuqsSearch)
-  const [isInputOnFocus, setIsInputOnFocus] = React.useState(false)
-  const [recommendations, setRecommendations] = React.useState<string[]>([])
+  const [search, setSearch] = useState(nuqsSearch)
+  const [isInputOnFocus, setIsInputOnFocus] = useState(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
   const submitRef = useRef<HTMLButtonElement>(null)
 
-  useEffect(() => {
-    const fetchRecommendations = async () => {
-      if (!search) setRecommendations([])
-      try {
-        const response = await fetch(
-          `https://http2.mlstatic.com/resources/sites/MLB/autosuggest?showFilters=true&limit=6&api_version=2&q=${search}`,
-        )
-
-        if (!response.ok) {
-          throw new Error(
-            `Failed to fetch recommendations: ${response.statusText}`,
-          )
-        }
-
-        const data = (await response.json()) as RecommendationsReturnType
-        setRecommendations(
-          data.suggested_queries.length > 0
-            ? data.suggested_queries
-                .map((query) => query.q)
-                .filter((query, index, self) => self.indexOf(query) === index)
-            : [],
-        )
-      } catch (error) {
-        console.error(error)
-      }
-    }
-
-    fetchRecommendations()
-  }, [search])
+  const { recommendations } = useRecommendations(search)
 
   const updateSearchParam = (search: string) => {
     const trimmedSearch = search.trim()
@@ -118,30 +83,31 @@ const SearchProduct = ({ className, ...props }: SearchProductProps) => {
               isInputOnFocus && 'opacity-100 pointer-events-auto',
             )}
           >
-            {recommendations.length === 0 && (
+            {recommendations.length === 0 ? (
               <li className="py-3 px-4">
                 <SearchX className="inline size-5 mr-2 flex-shrink-0" /> Nenhum
                 resultado encontrado
               </li>
+            ) : (
+              recommendations.map((recommendation) => (
+                <li key={recommendation} className="p-1 w-full">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="w-full justify-start h-fit py-2"
+                    aria-label={`procurar por "${recommendation}"`}
+                    onClick={() => {
+                      setSearch(recommendation)
+                      setIsInputOnFocus(false)
+                      updateSearchParam(recommendation)
+                    }}
+                  >
+                    <Search className="inline size-5 mr-2 flex-shrink-0" />
+                    {recommendation}
+                  </Button>
+                </li>
+              ))
             )}
-            {recommendations.map((recommendation) => (
-              <li key={recommendation} className="p-1 w-full">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="w-full justify-start h-fit py-2"
-                  aria-label={`procurar por "${recommendation}"`}
-                  onClick={() => {
-                    setSearch(recommendation)
-                    setIsInputOnFocus(false)
-                    updateSearchParam(recommendation)
-                  }}
-                >
-                  <Search className="inline size-5 mr-2 flex-shrink-0" />
-                  {recommendation}
-                </Button>
-              </li>
-            ))}
           </ul>
         )}
         <Button
