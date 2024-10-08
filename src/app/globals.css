@@ -76,3 +76,11 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0);
+}
+
+html .dark input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1)
+}

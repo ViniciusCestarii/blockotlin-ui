@@ -40,6 +40,7 @@ const SignupPage = () => {
       confirmPassword: '',
       firstName: '',
       lastName: '',
+      birthDate: '',
     },
   })
 
@@ -101,6 +102,25 @@ const SignupPage = () => {
                   )}
                 />
               </div>
+              <FormField
+                control={form.control}
+                name="birthDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Data de nascimento</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="date"
+                        {...field}
+                        autoComplete="bday"
+                        placeholder="dd/mm/aaaa"
+                        max={new Date().toISOString().split('T')[0]}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="email"

@@ -9,6 +9,7 @@ export type Account = {
   firstName: string
   lastName: string
   role: string
+  birthDate: string
   avatar?: string
 }
 
