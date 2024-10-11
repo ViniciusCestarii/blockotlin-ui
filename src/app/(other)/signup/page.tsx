@@ -46,7 +46,8 @@ const SignupPage = () => {
 
   const onSubmit = async (values: z.infer<typeof signupSchema>) => {
     startTransition(async () => {
-      const success = await signup(values)
+      const { confirmPassword: _, ...signupValues } = values // Exclude confirmPassword
+      const success = await signup(signupValues)
 
       if (success) {
         router.push('/')

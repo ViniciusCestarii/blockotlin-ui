@@ -5,7 +5,7 @@ export const login = async (
 ): Promise<Account | undefined> => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/public-api/v1/login`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/public-api/v1/authentication/login`,
       {
         method: 'POST',
         headers: {
@@ -31,7 +31,7 @@ export const signup = async (
 ): Promise<Account | undefined> => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/public-api/v1/signup`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/public-api/v1/authentication/signup`,
       {
         method: 'POST',
         headers: {
@@ -55,7 +55,7 @@ export const signup = async (
 export const verifyToken = async (): Promise<Account | undefined> => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/authentication/userInfo`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/authentication/user-info`,
     )
 
     if (!response.ok) {
@@ -71,9 +71,12 @@ export const verifyToken = async (): Promise<Account | undefined> => {
 
 export const logout = async (): Promise<void> => {
   try {
-    const response = await fetch('/logout', {
-      method: 'POST',
-    })
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/authentication/logout`,
+      {
+        method: 'POST',
+      },
+    )
 
     if (!response.ok) {
       throw new Error(`Logout failed: ${response.statusText}`)
