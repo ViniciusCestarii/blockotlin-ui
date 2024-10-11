@@ -1,8 +1,7 @@
-import env from '@/env'
 import axios, { AxiosError } from 'axios'
 
 const apiClient = axios.create({
-  baseURL: env.SERVER_URL,
+  baseURL: process.env.NEXT_PUBLIC_SERVER_URL,
   withCredentials: true,
 })
 
@@ -15,7 +14,9 @@ apiClient.interceptors.response.use(
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      console.log('Error message: ', error.response.data)
+      if (error.response.data) {
+        console.log('Error message: ', error.response.data)
+      }
       console.log('Error status: ', error.response.status)
       // console.log(error.response.headers)
     } else if (error.request) {

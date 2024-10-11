@@ -1,5 +1,3 @@
-'use server'
-
 import apiClient from '../axios'
 import { Authenticate, Account, CreateAccount } from './types'
 
