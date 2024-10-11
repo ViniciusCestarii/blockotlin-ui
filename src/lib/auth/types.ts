@@ -13,4 +13,6 @@ export type Account = {
   avatar?: string
 }
 
-export type CreateAccount = Omit<Account, 'id' | 'role'>
+export type CreateAccount = Omit<Account, 'id' | 'role'> & {
+  password: string
+}

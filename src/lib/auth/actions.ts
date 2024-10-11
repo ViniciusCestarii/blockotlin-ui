@@ -9,9 +9,7 @@ export const login = async (
   try {
     const response = await apiClient.post<Account>(
       '/public-api/v1/authentication/login',
-      {
-        body: JSON.stringify(auth),
-      },
+      auth,
     )
 
     return response.data
@@ -19,14 +17,12 @@ export const login = async (
 }
 
 export const signup = async (
-  account: CreateAccount,
+  createAccount: CreateAccount,
 ): Promise<Account | undefined> => {
   try {
     const response = await apiClient.post(
       '/public-api/v1/authentication/signup',
-      {
-        body: JSON.stringify(account),
-      },
+      createAccount,
     )
 
     return response.data
