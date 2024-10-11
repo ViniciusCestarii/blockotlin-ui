@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyToken } from './lib/auth/fetch'
+import { verifyToken } from './lib/auth/actions'
 
 const protectedRoutes = new Set([] as string[])
 const registerRoutes = new Set(['/signup', '/login'])

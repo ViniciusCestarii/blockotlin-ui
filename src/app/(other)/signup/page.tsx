@@ -24,10 +24,11 @@ import {
 } from '@/components/ui/form'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
-import { signupSchema } from '@/lib/auth/schema'
+import { signupSchema } from '@/lib/auth/schemas'
+import { signup } from '@/lib/auth/actions'
 
 const SignupPage = () => {
-  const { signup } = useAuth()
+  const { updateAuth } = useAuth()
   const router = useRouter()
 
   const [isPending, startTransition] = useTransition()
@@ -47,9 +48,10 @@ const SignupPage = () => {
   const onSubmit = async (values: z.infer<typeof signupSchema>) => {
     startTransition(async () => {
       const { confirmPassword: _, ...signupValues } = values // Exclude confirmPassword
-      const success = await signup(signupValues)
+      const account = await signup(signupValues)
 
-      if (success) {
+      if (account) {
+        updateAuth(account)
         router.push('/')
       }
     })

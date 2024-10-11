@@ -1,12 +1,7 @@
 'use client'
 
-import {
-  verifyToken,
-  login as serverLogin,
-  logout as serverLogout,
-  signup as serverSignup,
-} from '@/lib/auth/fetch'
-import { Account, Authenticate, CreateAccount } from '@/lib/auth/types'
+import { verifyToken } from '@/lib/auth/actions'
+import { Account } from '@/lib/auth/types'
 
 import React, {
   createContext,
@@ -18,9 +13,7 @@ import React, {
 
 interface AuthContextType {
   auth: Account | null
-  login: (auth: Authenticate) => Promise<boolean>
-  signup: (account: CreateAccount) => Promise<boolean>
-  logout: () => Promise<void>
+  updateAuth: (account: Account | null) => void
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -52,35 +45,13 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     checkAuth()
   }, [])
 
-  const login = async (auth: Authenticate) => {
-    const account = await serverLogin(auth)
-
-    if (account) {
-      setAuth(account)
-    }
-
-    return !!account
-  }
-
-  const signup = async (account: CreateAccount) => {
-    const newAccount = await serverSignup(account)
-
-    if (newAccount) {
-      setAuth(newAccount)
-    }
-
-    return !!newAccount
-  }
-
-  const logout = async () => {
-    await serverLogout()
+  const updateAuth = (account: Account | null) => {
+    setAuth(account)
   }
 
   const value = {
     auth,
-    login,
-    logout,
-    signup,
+    updateAuth,
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

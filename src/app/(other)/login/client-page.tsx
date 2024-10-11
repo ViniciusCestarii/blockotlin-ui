@@ -25,12 +25,14 @@ import {
 } from '@/components/ui/form'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTransition } from 'react'
-import { loginSchema } from '@/lib/auth/schema'
+import { loginSchema } from '@/lib/auth/schemas'
+import { login } from '@/lib/auth/actions'
 
 const ClientLoginPage = () => {
-  const { login } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
+
+  const { updateAuth } = useAuth()
 
   const [isPending, startTransition] = useTransition()
 
@@ -44,9 +46,10 @@ const ClientLoginPage = () => {
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     startTransition(async () => {
-      const success = await login(values)
+      const account = await login(values)
 
-      if (success) {
+      if (account) {
+        updateAuth(account)
         const next = searchParams.get('next')
         router.push(next ?? '/')
       }
