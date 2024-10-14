@@ -1,6 +1,6 @@
 'use client'
 
-import { verifyToken } from '@/lib/auth/actions'
+import { verifyToken } from '@/lib/auth/fetch'
 import { Account } from '@/lib/auth/types'
 
 import React, {
@@ -28,22 +28,14 @@ export const useAuth = (): AuthContextType => {
 
 interface AuthProviderProps {
   children: ReactNode
+  account?: Account | null
 }
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [auth, setAuth] = useState<Account | null>(null)
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const account = await verifyToken()
-
-      if (account) {
-        setAuth(account)
-      }
-    }
-
-    checkAuth()
-  }, [])
+export const AuthProvider = ({
+  children,
+  account = null,
+}: AuthProviderProps) => {
+  const [auth, setAuth] = useState<Account | null>(account)
 
   const updateAuth = (account: Account | null) => {
     setAuth(account)

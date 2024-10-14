@@ -26,7 +26,7 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTransition } from 'react'
 import { loginSchema } from '@/lib/auth/schemas'
-import { login } from '@/lib/auth/actions'
+import { login, verifyToken } from '@/lib/auth/fetch'
 
 const ClientLoginPage = () => {
   const router = useRouter()
@@ -46,7 +46,8 @@ const ClientLoginPage = () => {
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     startTransition(async () => {
-      const account = await login(values)
+      await login(values)
+      const account = await verifyToken()
 
       if (account) {
         updateAuth(account)

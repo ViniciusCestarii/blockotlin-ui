@@ -2,6 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Roboto } from 'next/font/google'
 import { AuthProvider } from '@/context/auth-context'
+import { cookies } from 'next/headers'
+import { verifyToken } from '@/lib/auth/fetch'
 
 export const metadata: Metadata = {
   title: 'Blockotlin',
@@ -15,14 +17,21 @@ const roboto = Roboto({
   variable: '--font-roboto',
 })
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const cookie = cookies().get('token')
+
+  let account = null
+  if (cookie) {
+    account = await verifyToken(cookie.value)
+  }
+
   return (
     <html lang="en" suppressHydrationWarning>
-      <AuthProvider>
+      <AuthProvider account={account}>
         <body
           className={`${roboto.variable} antialiased dark font-roboto overflow-x-hidden`}
         >

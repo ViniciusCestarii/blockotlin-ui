@@ -25,7 +25,7 @@ import {
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { signupSchema } from '@/lib/auth/schemas'
-import { signup } from '@/lib/auth/actions'
+import { signup, verifyToken } from '@/lib/auth/fetch'
 
 const SignupPage = () => {
   const { updateAuth } = useAuth()
@@ -48,7 +48,8 @@ const SignupPage = () => {
   const onSubmit = async (values: z.infer<typeof signupSchema>) => {
     startTransition(async () => {
       const { confirmPassword: _, ...signupValues } = values // Exclude confirmPassword
-      const account = await signup(signupValues)
+      await signup(signupValues)
+      const account = await verifyToken()
 
       if (account) {
         updateAuth(account)

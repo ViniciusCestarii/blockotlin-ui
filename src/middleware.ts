@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyToken } from './lib/auth/actions'
+import { verifyToken } from './lib/auth/fetch'
 
 const protectedRoutes = new Set([] as string[])
 const registerRoutes = new Set(['/signup', '/login'])
@@ -13,7 +13,7 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
-  const authorized = await verifyToken()
+  const authorized = await verifyToken(req.cookies.get('token')?.value)
 
   if (isProtectedRoute && !authorized) {
     const loginUrl = new URL('/login', req.nextUrl)
@@ -23,7 +23,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (isRegisterRoute && authorized) {
-    return NextResponse.redirect('/')
+    return NextResponse.redirect(new URL('/', req.nextUrl))
   }
 
   return NextResponse.next()
