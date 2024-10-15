@@ -27,7 +27,6 @@ import { useTransition } from 'react'
 import { signupSchema } from '@/lib/auth/schemas'
 import { signup, verifyToken } from '@/lib/auth/fetch'
 import { toastError } from '@/lib/shared/error-handling'
-import MainContainer from '@/components/system/main-container'
 
 const SignupPage = () => {
   const { updateAuth } = useAuth()

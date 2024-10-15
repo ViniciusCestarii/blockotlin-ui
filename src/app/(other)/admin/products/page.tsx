@@ -1,4 +1,5 @@
 import { searchParamsCache } from '@/app/(main)/search-params'
+import CreateProductDialog from '@/components/product/create-product-dialog'
 import ProductList, {
   ProductListSkeleton,
 } from '@/components/product/product-list'
@@ -21,6 +22,7 @@ export default function AdminProductPage({
       <section>
         <TypographyH2>Gerenciar produtos</TypographyH2>
         <SearchProduct />
+        <CreateProductDialog />
       </section>
       <section>
         <Suspense fallback={<ProductListSkeleton />}>

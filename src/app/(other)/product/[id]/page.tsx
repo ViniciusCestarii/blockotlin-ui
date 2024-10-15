@@ -36,7 +36,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <div className="h-full bg-white flex items-center justify-center rounded-lg">
           <Image
             src={product.image}
-            alt={product.title}
+            alt={product.name}
             width={600}
             height={600}
             className="w-full object-cover rounded-lg"
@@ -44,7 +44,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
         <div className="grid gap-6">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold">{product.title}</h1>
+            <h1 className="text-3xl md:text-4xl font-bold">{product.name}</h1>
             <p className="text-muted-foreground text-lg md:text-xl">
               {product.description}
             </p>

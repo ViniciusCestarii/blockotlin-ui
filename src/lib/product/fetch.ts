@@ -1,5 +1,6 @@
 import apiClient from '../axios'
-import { Product, ProductListResponse } from './types'
+import { handleErrors } from '../shared/error-handling'
+import { CreateProduct, Product, ProductListResponse } from './types'
 import React from 'react'
 export const fetchProducts = React.cache(async (search?: string) => {
   try {
@@ -23,3 +24,8 @@ export const fetchProduct = React.cache(async (id: string) => {
     return response.data
   } catch (error) {}
 })
+
+export const createProduct = async (product: CreateProduct) =>
+  handleErrors(
+    apiClient.post<Product>('/api/v1/product/create-product', product),
+  )

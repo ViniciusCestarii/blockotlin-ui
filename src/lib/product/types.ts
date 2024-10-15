@@ -1,16 +1,18 @@
-// export type Rating = {
-//   rate: number
-//   count: number
-// }
-
 export type Product = {
   id: number
-  title: string
+  name: string
   price: number
   description: string
-  category: string
   image: string
-  // rating: Rating
+  category: string
+}
+
+export type CreateProduct = Omit<Product, 'id' | 'description'> & {
+  description?: string
+}
+
+export type StringfiedCreateProduct = Omit<CreateProduct, 'price'> & {
+  price: string
 }
 
 export type ProductListResponse = {
