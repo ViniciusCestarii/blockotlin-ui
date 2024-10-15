@@ -9,9 +9,19 @@ const birthDateSchema = z
     'Data de nascimento deve estar no formato aaaa-mm-dd',
   )
 
+export const passwordRequirements = [
+  { regex: /.{8,}/, text: 'Pelo menos 8 caracteres' },
+  { regex: /[0-9]/, text: 'Pelo menos 1 número' },
+  { regex: /[a-z]/, text: 'Pelo menos 1 letra minúscula' },
+  { regex: /[A-Z]/, text: 'Pelo menos 1 letra maiúsucla' },
+]
+
 const passwordSchema = z
   .string()
-  .min(8, 'Senha deve ter no mínimo 8 caracteres')
+  .regex(/.{8,}/, 'Senha deve conter pelo menos 8 caracteres')
+  .regex(/[0-9]/, 'Senha deve conter pelo menos 1 número')
+  .regex(/[a-z]/, 'Senha deve conter pelo menos 1 letra minúscula')
+  .regex(/[A-Z]/, 'Senha deve conter pelo menos 1 letra maiúscula')
 
 const emailSchema = z.string().email('Email inválido')
 
@@ -24,12 +34,12 @@ export const signupSchema = z
   .object({
     email: emailSchema,
     password: passwordSchema,
-    confirmPassword: passwordSchema,
+    confirmPassword: z.string(),
     birthDate: birthDateSchema,
     firstName: z.string().min(2, 'Nome deve ter no mínimo 2 caracteres'),
     lastName: z.string().min(2, 'Sobrenome deve ter no mínimo 2 caracteres'),
   })
   .refine((data) => data.confirmPassword === data.password, {
     path: ['confirmPassword'],
-    message: 'Senhas não estão iguais',
+    message: 'Senhas devem ser iguais',
   })

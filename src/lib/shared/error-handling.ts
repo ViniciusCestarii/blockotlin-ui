@@ -56,8 +56,11 @@ export const handleErrors = async <T>(
 
 export const toastError = (err: ErrType['err']) => {
   if (err instanceof AxiosError) {
-    return toast.error(err.response?.data?.message)
+    const message =
+      err.response?.data?.message ||
+      'Parece que algo deu errado. Tente novamente mais tarde.'
+    return toast.error(message)
   }
 
-  return toast.error(err.message)
+  return toast.error('Parece que algo deu errado. Tente novamente mais tarde.')
 }

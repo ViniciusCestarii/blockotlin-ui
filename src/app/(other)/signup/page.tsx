@@ -8,7 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { Input, NewPasswordInput } from '@/components/ui/input'
 import { useAuth } from '@/context/auth-context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -157,13 +157,11 @@ const SignupPage = () => {
                   <FormItem>
                     <FormLabel>Senha</FormLabel>
                     <FormControl>
-                      <Input
-                        type="password"
+                      <NewPasswordInput
                         {...field}
                         autoComplete="new-password"
                       />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
