@@ -2,7 +2,7 @@ import Logo from '@/components/system/logo'
 import React, { Suspense } from 'react'
 import MainNav from '@/components/system/page-nav'
 import MainHeader from '@/components/system/page-header'
-import SearchProduct from './search-product'
+import SearchProduct from '@/components/product/search-product'
 
 const ShoppingNavbar = () => {
   return (

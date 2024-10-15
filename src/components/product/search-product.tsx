@@ -6,8 +6,8 @@ import { cn } from '@/lib/style/utils'
 import { Search, SearchX } from 'lucide-react'
 import React, { useRef, useState } from 'react'
 import { useQueryState } from 'nuqs'
-import { searchParamsParsers } from './search-params'
 import useRecommendations from '@/hooks/use-recommendations'
+import { searchParamsParsers } from '@/app/(main)/search-params'
 
 interface SearchProductProps extends React.HTMLAttributes<HTMLFormElement> {}
 

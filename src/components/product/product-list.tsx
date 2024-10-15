@@ -1,4 +1,4 @@
-import Product from '@/app/(main)/product'
+import Product from '@/components/product/product'
 import { Card, CardHeader } from '@/components/ui/card'
 import { fetchProducts } from '@/lib/product/fetch'
 import { HeartCrack } from 'lucide-react'

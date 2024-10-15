@@ -8,7 +8,7 @@ export type Account = {
   email: string
   firstName: string
   lastName: string
-  role: string
+  role: 'ADMIN' | 'CLIENT'
   birthDate: string
   avatar?: string
 }

@@ -1,10 +1,12 @@
 import { searchParamsCache } from './search-params'
-import ProductList, { ProductListSkeleton } from './product-list'
+import ProductList, {
+  ProductListSkeleton,
+} from '../../components/product/product-list'
 import { Suspense } from 'react'
 import {
   FeaturedProductList,
   FeaturedProductListSkeleton,
-} from './featured-product-list'
+} from '../../components/product/featured-product-list'
 import MainContainer from '@/components/system/main-container'
 import TypographyH2 from '@/components/ui/typography-h2'
 

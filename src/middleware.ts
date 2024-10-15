@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAccount } from './lib/auth/actions'
 
-const protectedRoutes = new Set(['/me'])
+const protectedRoutes = new Set(['/me', '/admin/dashboard', '/admin/products'])
 const registerRoutes = new Set(['/signup', '/login'])
 
 export default async function middleware(req: NextRequest) {

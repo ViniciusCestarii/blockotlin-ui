@@ -11,6 +11,8 @@ import {
 import Link from 'next/link'
 import UserAvatar from './avatar'
 import { formatUserName } from '@/lib/format'
+import AdminOnly from '../system/admin-only'
+import ClientOnly from '../system/client-only'
 
 const UserAvatarDropdown = () => {
   const { auth } = useAuth()
@@ -30,10 +32,21 @@ const UserAvatarDropdown = () => {
           <Link href="/me">
             <DropdownMenuItem>Perfil</DropdownMenuItem>
           </Link>
-          <DropdownMenuItem>Configurações</DropdownMenuItem>
-          <Link href="/cart">
-            <DropdownMenuItem>Carrinho</DropdownMenuItem>
-          </Link>
+          <AdminOnly>
+            <Link href="/admin/dashboard">
+              <DropdownMenuItem>Dashboard</DropdownMenuItem>
+            </Link>
+          </AdminOnly>
+          <AdminOnly>
+            <Link href="/admin/products">
+              <DropdownMenuItem>Gerenciar produtos</DropdownMenuItem>
+            </Link>
+          </AdminOnly>
+          <ClientOnly>
+            <Link href="/cart">
+              <DropdownMenuItem>Carrinho</DropdownMenuItem>
+            </Link>
+          </ClientOnly>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Sair</DropdownMenuItem>

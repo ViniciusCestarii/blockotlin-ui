@@ -1,15 +1,8 @@
 'use client'
 
-import { verifyToken } from '@/lib/auth/fetch'
 import { Account } from '@/lib/auth/types'
 
-import React, {
-  createContext,
-  useContext,
-  useState,
-  ReactNode,
-  useEffect,
-} from 'react'
+import React, { createContext, useContext, useState, ReactNode } from 'react'
 
 interface AuthContextType {
   auth: Account | null
