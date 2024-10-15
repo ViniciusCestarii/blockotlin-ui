@@ -26,9 +26,7 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <AuthProvider account={account}>
-        <body
-          className={`${roboto.variable} antialiased dark font-roboto overflow-x-hidden`}
-        >
+        <body className={`${roboto.variable} antialiased dark font-roboto`}>
           {children}
         </body>
         <Toaster />

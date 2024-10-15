@@ -67,7 +67,7 @@ const SignupPage = () => {
   }
 
   return (
-    <main className="flex items-center w-screen py-4 px-2 min-h-screen-minus-header justify-center sm:bg-gradient-to-br via-background from-background to-muted">
+    <main className="flex items-center w-full py-4 px-2 min-h-screen-minus-header justify-center sm:bg-gradient-to-br via-background from-background to-muted">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Criar conta</CardTitle>
