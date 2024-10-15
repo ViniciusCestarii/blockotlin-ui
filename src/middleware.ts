@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyToken } from './lib/auth/fetch'
+import { getAccount } from './lib/auth/actions'
 
 const protectedRoutes = new Set([] as string[])
 const registerRoutes = new Set(['/signup', '/login'])
@@ -13,7 +13,9 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
-  const authorized = await verifyToken(req.cookies.get('token')?.value)
+  const account = await getAccount()
+
+  const authorized = !!account
 
   if (isProtectedRoute && !authorized) {
     const loginUrl = new URL('/login', req.nextUrl)

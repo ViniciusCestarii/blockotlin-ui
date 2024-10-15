@@ -27,6 +27,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { useTransition } from 'react'
 import { loginSchema } from '@/lib/auth/schemas'
 import { login, verifyToken } from '@/lib/auth/fetch'
+import { toastError } from '@/lib/shared/error-handling'
 
 const ClientLoginPage = () => {
   const router = useRouter()
@@ -46,11 +47,17 @@ const ClientLoginPage = () => {
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     startTransition(async () => {
-      await login(values)
-      const account = await verifyToken()
+      const response = await login(values)
 
-      if (account) {
-        updateAuth(account)
+      if (response.kind === 'error') {
+        toastError(response.err)
+        return
+      }
+
+      const responseToken = await verifyToken()
+
+      if (responseToken.kind === 'ok') {
+        updateAuth(responseToken.result.data)
         const next = searchParams.get('next')
         router.push(next ?? '/')
       }

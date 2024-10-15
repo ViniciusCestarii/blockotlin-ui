@@ -19,7 +19,7 @@ const ProductList = async ({ search }: ProductListProps) => {
         <CardHeader className="flex flex-col items-center">
           <HeartCrack size={48} />
           <p className="text-center">
-            Nenhum produto encontrado para a busca &quot;{search}&quot;
+            Nenhum produto encontrado {search ? `para a busca "${search}"` : ''}
           </p>
         </CardHeader>
       </Card>

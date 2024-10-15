@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Roboto } from 'next/font/google'
 import { AuthProvider } from '@/context/auth-context'
-import { cookies } from 'next/headers'
-import { verifyToken } from '@/lib/auth/fetch'
+import { Toaster } from '@/components/ui/sonner'
+import { getAccount } from '@/lib/auth/actions'
 
 export const metadata: Metadata = {
   title: 'Blockotlin',
@@ -22,13 +22,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const cookie = cookies().get('token')
-
-  let account = null
-  if (cookie) {
-    account = await verifyToken(cookie.value)
-  }
-
+  const account = await getAccount()
   return (
     <html lang="en" suppressHydrationWarning>
       <AuthProvider account={account}>
@@ -37,6 +31,7 @@ export default async function RootLayout({
         >
           {children}
         </body>
+        <Toaster />
       </AuthProvider>
     </html>
   )

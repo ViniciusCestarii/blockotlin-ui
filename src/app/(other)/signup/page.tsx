@@ -26,6 +26,7 @@ import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
 import { signupSchema } from '@/lib/auth/schemas'
 import { signup, verifyToken } from '@/lib/auth/fetch'
+import { toastError } from '@/lib/shared/error-handling'
 
 const SignupPage = () => {
   const { updateAuth } = useAuth()
@@ -48,11 +49,17 @@ const SignupPage = () => {
   const onSubmit = async (values: z.infer<typeof signupSchema>) => {
     startTransition(async () => {
       const { confirmPassword: _, ...signupValues } = values // Exclude confirmPassword
-      await signup(signupValues)
-      const account = await verifyToken()
+      const response = await signup(signupValues)
 
-      if (account) {
-        updateAuth(account)
+      if (response.kind === 'error') {
+        toastError(response.err)
+        return
+      }
+
+      const responseToken = await verifyToken()
+
+      if (responseToken.kind === 'ok') {
+        updateAuth(responseToken.result.data)
         router.push('/')
       }
     })
