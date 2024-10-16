@@ -17,7 +17,7 @@ Pros:
 - Centralized Data Fetching: Server-side fetch caching simplifies data management by keeping caching and revalidation logic in one place (server).
 
 - Access to Secure APIs: Server-side data fetching can handle sensitive API calls (e.g., APIs requiring secret keys) without exposing secrets to the client.
-- 
+
 Cons:
 
 - Server Load: Puts more strain on your server as all data fetching and actions are handled server-side, increasing resource usage and possibly requiring more expensive infrastructure.
@@ -46,8 +46,8 @@ Pros:
 
 Cons:
 
-Initial Load Performance: Since data is fetched after the page loads, users might experience slower initial rendering (especially on slower networks) and may see loading spinners.
+- Initial Load Performance: Since data is fetched after the page loads, users might experience slower initial rendering (especially on slower networks) and may see loading spinners.
 
-SEO Challenges: Client-side fetching makes it harder to provide SEO-optimized pages, as content is not available to search engines immediately.
+- SEO Challenges: Client-side fetching makes it harder to provide SEO-optimized pages, as content is not available to search engines immediately.
 
-Increased Client-Side Processing: More work is shifted to the client, potentially slowing down devices with limited resources (e.g., mobile devices).
+- Increased Client-Side Processing: More work is shifted to the client, potentially slowing down devices with limited resources (e.g., mobile devices).
