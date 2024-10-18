@@ -5,7 +5,6 @@ const MAX_FILE_SIZE = 5 * 1024 * 1024
 export const createProductSchema = z.object({
   name: z.string().min(3, 'Nome deve ter no mínimo 3 caracteres'),
   price: z.coerce.string().min(0.01, 'Preço deve ser maior que 0'),
-  category: z.string().min(3, 'Categoria deve ter no mínimo 3 caracteres'),
   description: z.string().min(10, 'Descrição deve ter no mínimo 10 caracteres'),
   image: z
     .any()

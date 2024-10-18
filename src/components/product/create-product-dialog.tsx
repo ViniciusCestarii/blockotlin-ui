@@ -35,7 +35,6 @@ const defaultValues: CreateProductFormType = {
   description: '',
   image: '',
   name: '',
-  category: '',
   price: '',
 }
 
@@ -80,8 +79,6 @@ const CreateProductDialog = () => {
       closeDialog()
     })
   }
-
-  console.log(form.getValues())
 
   return (
     <Dialog
@@ -147,19 +144,6 @@ const CreateProductDialog = () => {
                       {...field}
                       autoComplete="description"
                     />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Categoria</FormLabel>
-                  <FormControl>
-                    <Input placeholder="eletrodoméstico" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
