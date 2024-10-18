@@ -1,3 +1,6 @@
+import { z } from 'zod'
+import { createProductSchema } from './schema'
+
 export type Product = {
   id: number
   name: string
@@ -7,14 +10,10 @@ export type Product = {
   category: string
 }
 
-export type CreateProduct = Omit<Product, 'id' | 'description'> & {
-  description?: string
-}
-
-export type StringfiedCreateProduct = Omit<CreateProduct, 'price'> & {
-  price: string
-}
+export type CreateProduct = Omit<Product, 'id'>
 
 export type ProductListResponse = {
   products: Product[]
 }
+
+export type CreateProductFormType = z.infer<typeof createProductSchema>

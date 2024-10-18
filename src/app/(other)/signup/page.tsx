@@ -13,7 +13,6 @@ import { useAuth } from '@/context/auth-context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
-import { z } from 'zod'
 import {
   Form,
   FormControl,
@@ -27,6 +26,7 @@ import { useTransition } from 'react'
 import { signupSchema } from '@/lib/auth/schemas'
 import { signup, verifyToken } from '@/lib/auth/fetch'
 import { toastError } from '@/lib/shared/error-handling'
+import { SignupFormType } from '@/lib/auth/types'
 
 const SignupPage = () => {
   const { updateAuth } = useAuth()
@@ -34,7 +34,7 @@ const SignupPage = () => {
 
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof signupSchema>>({
+  const form = useForm<SignupFormType>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
@@ -46,7 +46,7 @@ const SignupPage = () => {
     },
   })
 
-  const onSubmit = async (values: z.infer<typeof signupSchema>) => {
+  const onSubmit = async (values: SignupFormType) => {
     startTransition(async () => {
       const { confirmPassword: _, ...signupValues } = values // Exclude confirmPassword
       const response = await signup(signupValues)

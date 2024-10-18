@@ -1,3 +1,6 @@
+import { z } from 'zod'
+import { loginSchema, signupSchema } from './schemas'
+
 export type Authenticate = {
   email: string
   password: string
@@ -16,3 +19,7 @@ export type Account = {
 export type CreateAccount = Omit<Account, 'id' | 'role'> & {
   password: string
 }
+
+export type LoginFormType = z.infer<typeof loginSchema>
+
+export type SignupFormType = z.infer<typeof signupSchema>

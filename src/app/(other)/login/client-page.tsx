@@ -14,7 +14,6 @@ import { useAuth } from '@/context/auth-context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
-import { z } from 'zod'
 import {
   Form,
   FormControl,
@@ -28,6 +27,7 @@ import { useTransition } from 'react'
 import { loginSchema } from '@/lib/auth/schemas'
 import { login, verifyToken } from '@/lib/auth/fetch'
 import { toastError } from '@/lib/shared/error-handling'
+import { LoginFormType } from '@/lib/auth/types'
 
 const ClientLoginPage = () => {
   const router = useRouter()
@@ -37,7 +37,7 @@ const ClientLoginPage = () => {
 
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof loginSchema>>({
+  const form = useForm<LoginFormType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
@@ -45,7 +45,7 @@ const ClientLoginPage = () => {
     },
   })
 
-  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+  const onSubmit = async (values: LoginFormType) => {
     startTransition(async () => {
       const response = await login(values)
 
@@ -82,7 +82,6 @@ const ClientLoginPage = () => {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
-                        type="email"
                         placeholder="johndoe@example.com"
                         {...field}
                         autoComplete="email"
