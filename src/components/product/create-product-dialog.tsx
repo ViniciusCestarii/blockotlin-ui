@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -27,14 +28,15 @@ import {
   DialogTrigger,
 } from '../ui/dialog'
 import { Textarea } from '../ui/textarea'
-import CreateProductImageInput from './create-product-image-input'
+import ImageInput from '../ui/image-input'
+import { ImageUp } from 'lucide-react'
 
 const defaultValues: CreateProductFormType = {
   description: '',
   image: '',
   name: '',
   category: '',
-  price: '0',
+  price: '',
 }
 
 const CreateProductDialog = () => {
@@ -78,6 +80,8 @@ const CreateProductDialog = () => {
       closeDialog()
     })
   }
+
+  console.log(form.getValues())
 
   return (
     <Dialog
@@ -161,12 +165,32 @@ const CreateProductDialog = () => {
                 </FormItem>
               )}
             />
-            <CreateProductImageInput register={form.register} />
-            <FormMessage>
-              {typeof form.formState.errors?.image?.message === 'string'
-                ? form.formState.errors?.image?.message
-                : undefined}
-            </FormMessage>
+            <FormField
+              control={form.control}
+              name="image"
+              render={({ field }) => (
+                <FormItem>
+                  <Button asChild className="w-full">
+                    <FormLabel>
+                      Selecionar imagem <ImageUp className="size-4 ml-1" />
+                    </FormLabel>
+                  </Button>
+                  <FormControl>
+                    <ImageInput
+                      {...field}
+                      value={form.getValues('image')[0]?.filename}
+                      onChange={(e) => {
+                        form.setValue('image', e.target.files)
+                      }}
+                    />
+                  </FormControl>
+                  <FormDescription>
+                    Selecione uma imagem para o produto.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <Button type="submit" className="w-full" disabled={isPending}>
               Criar produto
             </Button>
