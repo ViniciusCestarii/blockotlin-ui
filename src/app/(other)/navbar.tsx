@@ -6,7 +6,7 @@ import MainHeader from '@/components/system/page-header'
 const Navbar = () => {
   return (
     <MainHeader className="flex items-center">
-      <Logo />
+      <Logo heading />
       <MainNav className="ml-auto" />
     </MainHeader>
   )

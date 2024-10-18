@@ -3,9 +3,12 @@ import { Bitcoin } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
-interface LogoProps extends React.HTMLAttributes<HTMLAnchorElement> {}
+interface LogoProps extends React.HTMLAttributes<HTMLAnchorElement> {
+  heading?: boolean
+}
 
-const Logo = ({ className, ...props }: LogoProps) => {
+const Logo = ({ className, heading, ...props }: LogoProps) => {
+  const Comp = heading ? 'h1' : 'span'
   return (
     <Link
       {...props}
@@ -13,7 +16,7 @@ const Logo = ({ className, ...props }: LogoProps) => {
       href="/"
     >
       <Bitcoin className="h-6 w-6" />
-      <span className="ml-2 text-lg font-bold">Blockotlin</span>
+      <Comp className="ml-2 text-lg font-bold">Blockotlin</Comp>
     </Link>
   )
 }
