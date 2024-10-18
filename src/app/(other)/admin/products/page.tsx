@@ -18,11 +18,13 @@ export default function AdminProductPage({
   const { search } = parsedSearchParams
 
   return (
-    <MainContainer>
+    <MainContainer className="space-y-5">
       <section>
         <TypographyH2>Gerenciar produtos</TypographyH2>
-        <SearchProduct />
-        <CreateProductDialog />
+        <div className="flex">
+          <SearchProduct className="flex-1" />
+          <CreateProductDialog />
+        </div>
       </section>
       <section>
         <Suspense fallback={<ProductListSkeleton />}>

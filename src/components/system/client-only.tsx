@@ -9,7 +9,7 @@ interface ClientOnlyProps {
 const ClientOnly = ({ children }: ClientOnlyProps) => {
   const { auth } = useAuth()
 
-  if (!auth || auth.role !== 'CLIENT') {
+  if (auth?.role === 'ADMIN') {
     return null
   }
 
