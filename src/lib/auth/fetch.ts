@@ -37,6 +37,3 @@ export const edgeVerifyToken = async (token?: string) =>
       },
     ).then((res) => res.json()),
   )
-
-export const logout = async () =>
-  handleErrors(apiClient.post<undefined>('/api/v1/authentication/logout'))

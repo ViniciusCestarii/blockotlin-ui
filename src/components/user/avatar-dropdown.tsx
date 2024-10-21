@@ -13,9 +13,11 @@ import UserAvatar from './avatar'
 import { formatUserName } from '@/lib/format'
 import AdminOnly from '../system/admin-only'
 import ClientOnly from '../system/client-only'
+import { logout } from '@/lib/auth/action'
 
 const UserAvatarDropdown = () => {
-  const { auth } = useAuth()
+  const { auth, updateAuth } = useAuth()
+
   if (!auth) return null
 
   return (
@@ -49,7 +51,14 @@ const UserAvatarDropdown = () => {
           </ClientOnly>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Sair</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            logout()
+            updateAuth(null)
+          }}
+        >
+          Sair
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
