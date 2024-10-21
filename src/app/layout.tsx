@@ -3,7 +3,7 @@ import './globals.css'
 import { Roboto } from 'next/font/google'
 import { AuthProvider } from '@/context/auth-context'
 import { Toaster } from '@/components/ui/sonner'
-import { getAccount } from '@/lib/auth/actions'
+import { getAccount } from '@/lib/auth/server-only'
 
 export const metadata: Metadata = {
   title: 'Blockotlin',
@@ -22,7 +22,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const account = await getAccount()
+  const account = getAccount()
   return (
     <html lang="en" suppressHydrationWarning>
       <AuthProvider account={account}>

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getAccount } from './lib/auth/actions'
+import { validateAccountToken } from './lib/auth/server-only'
 
 const protectedRoutes = new Set(['/me', '/admin/dashboard', '/admin/products'])
 const registerRoutes = new Set(['/signup', '/login'])
@@ -13,7 +13,7 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
-  const account = await getAccount()
+  const account = await validateAccountToken()
 
   const authorized = !!account
 
