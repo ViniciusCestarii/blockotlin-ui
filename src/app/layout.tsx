@@ -24,7 +24,7 @@ export default async function RootLayout({
 }>) {
   const account = getAccount()
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="pt-BR" suppressHydrationWarning>
       <AuthProvider account={account}>
         <body className={`${roboto.variable} antialiased dark font-roboto`}>
           {children}
