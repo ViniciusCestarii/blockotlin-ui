@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { validateAccountToken } from './lib/auth/server-only'
 
+// Middleware currently only supports the Edge runtime. The Node.js runtime can not be used.
+
 const protectedRoutes = new Set(['/me', '/admin/dashboard', '/admin/products'])
 const registerRoutes = new Set(['/signup', '/login'])
 

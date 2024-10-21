@@ -24,5 +24,19 @@ export const verifyToken = async (token?: string) =>
     }),
   )
 
+export const edgeVerifyToken = async (token?: string) =>
+  handleErrors<Account>(
+    fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/authentication/user-info`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      },
+    ).then((res) => res.json()),
+  )
+
 export const logout = async () =>
   handleErrors(apiClient.post<undefined>('/api/v1/authentication/logout'))

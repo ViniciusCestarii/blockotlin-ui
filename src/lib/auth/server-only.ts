@@ -1,8 +1,8 @@
 import 'server-only'
 
 import { cookies } from 'next/headers'
-import { verifyToken } from './fetch'
-import jwt from 'jsonwebtoken'
+import { edgeVerifyToken } from './fetch'
+import { decodeJwt } from 'jose'
 import { Account } from './types'
 
 export const validateAccountToken = async () => {
@@ -11,13 +11,13 @@ export const validateAccountToken = async () => {
   if (!cookie) {
     return null
   }
-  const response = await verifyToken(cookie.value)
+  const response = await edgeVerifyToken(cookie.value)
 
   if (response.kind === 'error') {
     return null
   }
 
-  const account = response.result.data
+  const account = response.result
 
   return account
 }
@@ -29,7 +29,7 @@ export const getAccount = (): Account | null => {
     return null
   }
 
-  const decoded = jwt.decode(cookie.value) as Account | null
+  const decoded = decodeJwt(cookie.value) as Account | null
 
   if (!decoded) {
     return null
