@@ -30,12 +30,8 @@ interface NewPasswordInputProps extends InputProps {
 const NewPasswordInput = React.forwardRef<
   HTMLInputElement,
   NewPasswordInputProps
->(({ className, ...props }, ref) => {
-  const [isVisible, setIsVisible] = React.useState(false)
-
+>((props, ref) => {
   const { value } = props
-
-  const toggleVisibility = () => setIsVisible(!isVisible)
 
   const checkStrength = (pass: string) => {
     return passwordRequirements.map((req) => ({
@@ -68,42 +64,12 @@ const NewPasswordInput = React.forwardRef<
   return (
     <div>
       <div className="space-y-2">
-        <div className="relative">
-          <Input
-            {...props}
-            ref={ref}
-            className={cn('pr-9', className)}
-            placeholder="Password"
-            type={isVisible ? 'text' : 'password'}
-            value={value}
-            aria-invalid={strengthScore < 4}
-            aria-describedby="password-strength"
-          />
-          <button
-            className="absolute inset-y-px right-px flex h-full w-9 items-center justify-center rounded-r-lg text-muted-foreground/80 transition-shadow hover:text-foreground focus-visible:border focus-visible:border-ring focus-visible:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-            type="button"
-            onClick={toggleVisibility}
-            aria-label={isVisible ? 'Esconder senha' : 'Mostrar senha'}
-            aria-pressed={isVisible}
-            aria-controls="password"
-          >
-            {isVisible ? (
-              <EyeOff
-                size={16}
-                strokeWidth={2}
-                aria-hidden="true"
-                role="presentation"
-              />
-            ) : (
-              <Eye
-                size={16}
-                strokeWidth={2}
-                aria-hidden="true"
-                role="presentation"
-              />
-            )}
-          </button>
-        </div>
+        <PasswordInput
+          {...props}
+          ref={ref}
+          aria-invalid={strengthScore < 4}
+          aria-describedby="password-strength"
+        />
       </div>
 
       <div
@@ -162,4 +128,53 @@ const NewPasswordInput = React.forwardRef<
 
 NewPasswordInput.displayName = 'NewPasswordInput'
 
-export { Input, NewPasswordInput }
+interface PasswordInputProps extends InputProps {
+  value: string
+}
+
+const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
+  ({ className, ...props }, ref) => {
+    const [isVisible, setIsVisible] = React.useState(false)
+
+    const toggleVisibility = () => setIsVisible(!isVisible)
+
+    return (
+      <div className="relative">
+        <Input
+          {...props}
+          ref={ref}
+          className={cn('pr-9', className)}
+          type={isVisible ? 'text' : 'password'}
+        />
+        <button
+          className="absolute inset-y-px right-px flex h-full w-9 items-center justify-center rounded-r-lg text-muted-foreground/80 transition-shadow hover:text-foreground focus-visible:border focus-visible:border-ring focus-visible:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/30 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+          type="button"
+          onClick={toggleVisibility}
+          aria-label={isVisible ? 'Esconder senha' : 'Mostrar senha'}
+          aria-pressed={isVisible}
+          aria-controls="password"
+        >
+          {isVisible ? (
+            <EyeOff
+              size={16}
+              strokeWidth={2}
+              aria-hidden="true"
+              role="presentation"
+            />
+          ) : (
+            <Eye
+              size={16}
+              strokeWidth={2}
+              aria-hidden="true"
+              role="presentation"
+            />
+          )}
+        </button>
+      </div>
+    )
+  },
+)
+
+PasswordInput.displayName = 'PasswordInput'
+
+export { Input, NewPasswordInput, PasswordInput }
