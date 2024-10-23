@@ -4,13 +4,16 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { formatPrice } from '@/lib/format'
 import { cn } from '@/lib/style/utils'
+import AdminOnly from '../system/admin-only'
+import EditProductDialog from './edit-product-dialog'
+import { Edit2 } from 'lucide-react'
 
-interface ProductProps {
+export interface ProductProps {
   product: ProductType
   size?: 'default' | 'sm'
 }
 
-const Product = ({ product, size = 'default' }: ProductProps) => {
+const ProductBase = ({ product, size = 'default' }: ProductProps) => {
   return (
     <Link href={`/product/${product.id}`} className="group">
       <article className="rounded-md overflow-hidden h-full">
@@ -50,6 +53,29 @@ const Product = ({ product, size = 'default' }: ProductProps) => {
         </div>
       </article>
     </Link>
+  )
+}
+
+const Product = (props: ProductProps) => {
+  return (
+    <div className="relative">
+      <ProductBase {...props} />
+      <AdminOnly>
+        <EditProductDialog
+          product={props.product}
+          buttonProps={{
+            className: cn(
+              'absolute top-1 right-1 bg-transparent group',
+              props.size === 'sm' && 'scale-75 top-[0.125rem] right-[0.125rem]',
+            ),
+            size: 'icon',
+            children: (
+              <Edit2 className="text-background group-hover:text-inherit transition-colors" />
+            ),
+          }}
+        />
+      </AdminOnly>
+    </div>
   )
 }
 

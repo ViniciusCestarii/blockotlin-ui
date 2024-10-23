@@ -113,8 +113,12 @@ const EditProductDialogBase = ({
       onOpenChange={(open) => (open ? setOpen(open) : closeDialog())}
     >
       <DialogTrigger asChild>
-        <Button variant="outline" {...buttonProps}>
-          Editar produto
+        <Button
+          variant="outline"
+          aria-label={`Editar produto ${product.name}`}
+          {...buttonProps}
+        >
+          {buttonProps?.children ?? 'Editar produto'}
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-lg">
