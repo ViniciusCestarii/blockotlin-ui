@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { validateAccountToken } from './lib/auth/server-only'
+import { cookies } from 'next/headers'
 
 // Middleware currently only supports the Edge runtime. The Node.js runtime can not be used.
 
@@ -10,8 +11,9 @@ export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname
   const isProtectedRoute = protectedRoutes.has(path)
   const isRegisterRoute = registerRoutes.has(path)
+  const hasToken = !!cookies().get('token')
 
-  if (!isProtectedRoute && !isRegisterRoute) {
+  if (!isProtectedRoute && !isRegisterRoute && !hasToken) {
     return NextResponse.next()
   }
 
@@ -23,14 +25,22 @@ export default async function middleware(req: NextRequest) {
     const loginUrl = new URL('/login', req.nextUrl)
     loginUrl.searchParams.set('next', req.nextUrl.pathname)
 
-    return NextResponse.redirect(loginUrl)
+    const response = NextResponse.redirect(loginUrl)
+
+    response.headers.append('Invalid-Auth', 'true')
+
+    return response
   }
 
   if (isRegisterRoute && authorized) {
     return NextResponse.redirect(new URL('/', req.nextUrl))
   }
 
-  return NextResponse.next()
+  const response = NextResponse.next()
+
+  response.headers.append('Invalid-Auth', String(!authorized))
+
+  return response
 }
 
 export const config = {

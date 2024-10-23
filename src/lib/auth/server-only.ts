@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { edgeVerifyToken } from './fetch'
 import { decodeJwt } from 'jose'
 import { Account } from './types'
@@ -26,6 +26,12 @@ export const getAccount = (): Account | null => {
   const cookie = cookies().get('token')
 
   if (!cookie) {
+    return null
+  }
+
+  const isInvalid = Boolean(headers().get('Invalid-Auth'))
+
+  if (isInvalid) {
     return null
   }
 
