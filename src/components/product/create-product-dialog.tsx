@@ -31,6 +31,7 @@ import { Textarea } from '../ui/textarea'
 import ImageInput from '../ui/image-input'
 import { ImageUp } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import AdminOnly from '../system/admin-only'
 
 const defaultValues: CreateProductFormType = {
   description: '',
@@ -39,7 +40,7 @@ const defaultValues: CreateProductFormType = {
   price: '',
 }
 
-const CreateProductDialog = () => {
+const CreateProductDialogBase = () => {
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
 
@@ -191,6 +192,14 @@ const CreateProductDialog = () => {
         </Form>
       </DialogContent>
     </Dialog>
+  )
+}
+
+const CreateProductDialog = () => {
+  return (
+    <AdminOnly>
+      <CreateProductDialogBase />
+    </AdminOnly>
   )
 }
 
