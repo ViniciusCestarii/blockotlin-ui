@@ -29,7 +29,7 @@ export const getAccount = (): Account | null => {
     return null
   }
 
-  const isInvalid = Boolean(headers().get('Invalid-Auth'))
+  const isInvalid = headers().get('Invalid-Auth') === 'true'
 
   if (isInvalid) {
     return null
