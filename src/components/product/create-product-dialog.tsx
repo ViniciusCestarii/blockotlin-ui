@@ -30,6 +30,7 @@ import {
 import { Textarea } from '../ui/textarea'
 import ImageInput from '../ui/image-input'
 import { ImageUp } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 const defaultValues: CreateProductFormType = {
   description: '',
@@ -41,6 +42,8 @@ const defaultValues: CreateProductFormType = {
 const CreateProductDialog = () => {
   const [open, setOpen] = useState(false)
   const [isPending, startTransition] = useTransition()
+
+  const router = useRouter()
 
   const form = useForm<CreateProductFormType>({
     resolver: zodResolver(createProductSchema),
@@ -58,6 +61,11 @@ const CreateProductDialog = () => {
       if (!image) {
         return
       }
+
+      // obs: this is a simplification
+      // the correct way would be to send all the data and the image to the server via form data
+      // there the server would treat the image and save it to the cloud
+      // then save the product with the image url
 
       const base64Image = await transformImgToBase64URL(image)
 
@@ -77,6 +85,7 @@ const CreateProductDialog = () => {
       }
 
       closeDialog()
+      router.refresh()
     })
   }
 
