@@ -32,6 +32,7 @@ import {
 import ImageInput from '../ui/image-input'
 import { Textarea } from '../ui/textarea'
 import AdminOnly from '../system/admin-only'
+import { toast } from 'sonner'
 
 interface EditProductDialogProps {
   product: Product
@@ -98,6 +99,8 @@ const EditProductDialogBase = ({
         toastError(response.err)
         return
       }
+
+      toast.success('Produto atualizado com sucesso!')
 
       closeDialog()
       router.refresh()

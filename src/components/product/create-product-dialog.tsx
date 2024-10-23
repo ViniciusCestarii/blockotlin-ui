@@ -32,6 +32,7 @@ import ImageInput from '../ui/image-input'
 import { ImageUp } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import AdminOnly from '../system/admin-only'
+import { toast } from 'sonner'
 
 const defaultValues: CreateProductFormType = {
   description: '',
@@ -84,6 +85,8 @@ const CreateProductDialogBase = () => {
         toastError(response.err)
         return
       }
+
+      toast.success('Produto criado com sucesso!')
 
       closeDialog()
       router.refresh()
