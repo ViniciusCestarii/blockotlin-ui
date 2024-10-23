@@ -6,15 +6,16 @@ import { cn } from '@/lib/style/utils'
 
 interface ImageInputProps extends InputProps {
   ref: never
+  defaultValue?: string
 }
 
 const ImageInput = forwardRef<React.ElementRef<'input'>, ImageInputProps>(
-  ({ className, ...props }, ref) => {
-    const [preview, setPreview] = useState<string | null>()
+  ({ className, defaultValue = null, ...props }, ref) => {
+    const [preview, setPreview] = useState<string | null>(defaultValue)
 
     const handleUploadedFile = (event: ChangeEvent<HTMLInputElement>) => {
       if (!event.target.files) {
-        setPreview(null)
+        setPreview(defaultValue)
         return
       }
 

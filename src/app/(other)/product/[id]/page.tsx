@@ -6,6 +6,9 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { formatPrice } from '@/lib/format'
 import MainContainer from '@/components/system/main-container'
+import EditProductDialog from '@/components/product/edit-product-dialog'
+import AdminOnly from '@/components/system/admin-only'
+import TypographyH2 from '@/components/ui/typography-h2'
 
 interface ProductPageProps {
   params: {
@@ -33,6 +36,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <MainContainer>
+      <AdminOnly>
+        <section>
+          <TypographyH2>Opções de Administrador</TypographyH2>
+          <div className="flex py-2">
+            <EditProductDialog product={product} />
+          </div>
+        </section>
+      </AdminOnly>
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         <div className="h-full bg-white flex items-center justify-center rounded-lg">
           <Image
@@ -41,7 +52,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             width={600}
             height={600}
             priority
-            className="w-full max-h-[40rem] object-contain rounded-lg"
+            className="w-full max-h-96 sm:max-h-[38rem] object-contain rounded-lg"
           />
         </div>
         <div className="grid gap-6">

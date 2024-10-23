@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { createProductSchema } from './schema'
+import { createProductSchema, updateProductSchema } from './schema'
 
 export type Product = {
   id: number
@@ -16,3 +16,5 @@ export type ProductListResponse = {
 }
 
 export type CreateProductFormType = z.infer<typeof createProductSchema>
+
+export type UpdateProductFormType = z.infer<typeof updateProductSchema>
