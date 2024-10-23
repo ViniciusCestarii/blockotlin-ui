@@ -5,6 +5,7 @@ import { fetchProduct, fetchProducts } from '@/lib/product/fetch'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { formatPrice } from '@/lib/format'
+import MainContainer from '@/components/system/main-container'
 
 interface ProductPageProps {
   params: {
@@ -31,7 +32,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   }
 
   return (
-    <div className="container mx-auto px-4 py-6 md:px-8 lg:py-10">
+    <MainContainer>
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         <div className="h-full bg-white flex items-center justify-center rounded-lg">
           <Image
@@ -39,13 +40,14 @@ export default async function ProductPage({ params }: ProductPageProps) {
             alt={product.name}
             width={600}
             height={600}
+            priority
             className="w-full max-h-[40rem] object-contain rounded-lg"
           />
         </div>
         <div className="grid gap-6">
-          <div>
+          <div className="overflow-auto">
             <h1 className="text-3xl md:text-4xl font-bold">{product.name}</h1>
-            <p className="text-muted-foreground text-lg md:text-xl">
+            <p className="text-muted-foreground text-lg md:text-xl break-words max-w-full">
               {product.description}
             </p>
           </div>
@@ -146,6 +148,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
       </div>
-    </div>
+    </MainContainer>
   )
 }
