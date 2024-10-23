@@ -19,7 +19,7 @@ import { transformImgToBase64URL } from '@/lib/utils/img'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ImageUp } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useState, useTransition } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import {
   Dialog,
@@ -62,10 +62,14 @@ const EditProductDialogBase = ({
     defaultValues,
   })
 
-  const closeDialog = () => {
-    setOpen(false)
-    form.reset(defaultValues)
-  }
+  useEffect(() => {
+    // ensure the form is reset when the dialog opens
+    // without this the form would keep the previous values when opening a updated product
+    if (open) {
+      form.reset(defaultValues)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open])
 
   const onSubmit = async (values: UpdateProductFormType) => {
     startTransition(async () => {
@@ -102,16 +106,13 @@ const EditProductDialogBase = ({
 
       toast.success('Produto atualizado com sucesso!')
 
-      closeDialog()
+      setOpen(false)
       router.refresh()
     })
   }
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(open) => (open ? setOpen(open) : closeDialog())}
-    >
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
           variant="outline"
@@ -157,6 +158,7 @@ const EditProductDialogBase = ({
                     <Input
                       type="number"
                       placeholder="1500"
+                      step="0.01"
                       {...field}
                       autoComplete="price"
                     />
