@@ -14,13 +14,15 @@ const Product = ({ product, size = 'default' }: ProductProps) => {
   return (
     <Link href={`/product/${product.id}`} className="group">
       <article className="rounded-md overflow-hidden h-full">
-        <Image
-          src={product.image}
-          alt={product.name}
-          width={400}
-          height={480}
-          className="object-cover aspect-[1/1.2]"
-        />
+        <div className="w-full h-fit bg-white">
+          <Image
+            src={product.image}
+            alt={product.name}
+            width={400}
+            height={480}
+            className="object-contain aspect-[1/1.2]"
+          />
+        </div>
         <div className="px-3 py-2">
           <h3
             title={product.name}
