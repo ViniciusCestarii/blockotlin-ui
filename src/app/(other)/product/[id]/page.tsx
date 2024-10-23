@@ -39,7 +39,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             alt={product.name}
             width={600}
             height={600}
-            className="w-full object-cover rounded-lg"
+            className="w-full max-h-[40rem] object-contain rounded-lg"
           />
         </div>
         <div className="grid gap-6">
