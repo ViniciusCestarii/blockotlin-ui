@@ -1,37 +1,31 @@
-import axios from 'axios'
-import { Product } from './types'
+import apiClient from '../axios'
+import { handleErrors } from '../shared/error-handling'
+import { CreateProduct, Product, ProductListResponse } from './types'
 import React from 'react'
-
 export const fetchProducts = React.cache(async (search?: string) => {
   try {
-    // change to apiClient to use the correct api
-    // the fakestoreapi.com doesn't have a search endpoint
-    const response = await axios.get<Product[]>(
-      'https://fakestoreapi.com/products',
+    const response = await apiClient<ProductListResponse>(
+      '/public-api/v1/product',
       {
-        params: { q: search },
+        params: {
+          name: search,
+        },
       },
     )
-    if (!search) return response.data
 
-    return response.data.filter((product) =>
-      product.title.toLowerCase().includes(search.toLowerCase()),
-    )
-  } catch (error) {
-    console.error('Login error:', error)
-  }
+    return response.data.products
+  } catch (error) {}
 })
 
 export const fetchProduct = React.cache(async (id: string) => {
   try {
-    // change to apiClient to use the correct api
-    // the fakestoreapi.com doesn't have a search endpoint
-    const response = await axios.get<Product>(
-      `https://fakestoreapi.com/products/${id}`,
-    )
+    const response = await apiClient<Product>(`/public-api/v1/product/${id}`)
 
     return response.data
-  } catch (error) {
-    console.error('Login error:', error)
-  }
+  } catch (error) {}
 })
+
+export const createProduct = async (product: CreateProduct) =>
+  handleErrors(
+    apiClient.post<Product>('/api/v1/product/create-product', product),
+  )

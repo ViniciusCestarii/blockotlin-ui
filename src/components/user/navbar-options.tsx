@@ -2,8 +2,8 @@
 
 import { useAuth } from '@/context/auth-context'
 import Signup from './signup'
-import UserAvatar from './avatar'
 import Login from './login'
+import UserAvatarDropdown from './avatar-dropdown'
 
 const UserNavbarOptions = () => {
   const { auth } = useAuth()
@@ -16,7 +16,7 @@ const UserNavbarOptions = () => {
       </div>
     )
   }
-  return <UserAvatar />
+  return <UserAvatarDropdown />
 }
 
 export default UserNavbarOptions

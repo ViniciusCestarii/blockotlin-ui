@@ -26,9 +26,6 @@ const config: Config = {
       transitionTimingFunction: {
         'step-end': 'step-end',
       },
-      height: {
-        'screen-minus-header': 'calc(100vh - 3.5rem)',
-      },
       minHeight: {
         'screen-minus-header': 'calc(100vh - 3.5rem)',
       },

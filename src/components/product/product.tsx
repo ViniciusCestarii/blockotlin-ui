@@ -16,14 +16,14 @@ const Product = ({ product, size = 'default' }: ProductProps) => {
       <article className="rounded-md overflow-hidden h-full">
         <Image
           src={product.image}
-          alt={product.title}
+          alt={product.name}
           width={400}
           height={480}
           className="object-cover aspect-[1/1.2]"
         />
         <div className="px-3 py-2">
           <h3
-            title={product.title}
+            title={product.name}
             style={{
               WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
@@ -34,7 +34,7 @@ const Product = ({ product, size = 'default' }: ProductProps) => {
               size === 'sm' && 'text-xs lg:text-sm',
             )}
           >
-            {product.title}
+            {product.name}
           </h3>
           <span
             className={cn(

@@ -14,7 +14,6 @@ import { useAuth } from '@/context/auth-context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
-import { z } from 'zod'
 import {
   Form,
   FormControl,
@@ -25,16 +24,20 @@ import {
 } from '@/components/ui/form'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useTransition } from 'react'
-import { loginSchema } from '@/lib/auth/schema'
+import { loginSchema } from '@/lib/auth/schemas'
+import { login, verifyToken } from '@/lib/auth/fetch'
+import { toastError } from '@/lib/shared/error-handling'
+import { LoginFormType } from '@/lib/auth/types'
 
 const ClientLoginPage = () => {
-  const { login } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
 
+  const { updateAuth } = useAuth()
+
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof loginSchema>>({
+  const form = useForm<LoginFormType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
@@ -42,11 +45,19 @@ const ClientLoginPage = () => {
     },
   })
 
-  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+  const onSubmit = async (values: LoginFormType) => {
     startTransition(async () => {
-      const success = await login(values)
+      const response = await login(values)
 
-      if (success) {
+      if (response.kind === 'error') {
+        toastError(response.err)
+        return
+      }
+
+      const responseToken = await verifyToken()
+
+      if (responseToken.kind === 'ok') {
+        updateAuth(responseToken.result.data)
         const next = searchParams.get('next')
         router.push(next ?? '/')
       }
@@ -54,7 +65,7 @@ const ClientLoginPage = () => {
   }
 
   return (
-    <div className="flex h-screen-minus-header items-center justify-center sm:bg-gradient-to-br via-background from-background to-muted">
+    <main className="flex items-center w-full py-4 px-2 min-h-screen-minus-header justify-center sm:bg-gradient-to-br via-background from-background to-muted">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Entrar</CardTitle>
@@ -71,7 +82,6 @@ const ClientLoginPage = () => {
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
-                        type="email"
                         placeholder="johndoe@example.com"
                         {...field}
                         autoComplete="email"
@@ -115,7 +125,7 @@ const ClientLoginPage = () => {
           </Link>
         </CardFooter>
       </Card>
-    </div>
+    </main>
   )
 }
 

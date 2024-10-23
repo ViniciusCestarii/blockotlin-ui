@@ -8,12 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
+import { Input, NewPasswordInput } from '@/components/ui/input'
 import { useAuth } from '@/context/auth-context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link'
-import { z } from 'zod'
 import {
   Form,
   FormControl,
@@ -24,15 +23,18 @@ import {
 } from '@/components/ui/form'
 import { useRouter } from 'next/navigation'
 import { useTransition } from 'react'
-import { signupSchema } from '@/lib/auth/schema'
+import { signupSchema } from '@/lib/auth/schemas'
+import { signup, verifyToken } from '@/lib/auth/fetch'
+import { toastError } from '@/lib/shared/error-handling'
+import { SignupFormType } from '@/lib/auth/types'
 
 const SignupPage = () => {
-  const { signup } = useAuth()
+  const { updateAuth } = useAuth()
   const router = useRouter()
 
   const [isPending, startTransition] = useTransition()
 
-  const form = useForm<z.infer<typeof signupSchema>>({
+  const form = useForm<SignupFormType>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
       email: '',
@@ -40,21 +42,31 @@ const SignupPage = () => {
       confirmPassword: '',
       firstName: '',
       lastName: '',
+      birthDate: '',
     },
   })
 
-  const onSubmit = async (values: z.infer<typeof signupSchema>) => {
+  const onSubmit = async (values: SignupFormType) => {
     startTransition(async () => {
-      const success = await signup(values)
+      const { confirmPassword: _, ...signupValues } = values // Exclude confirmPassword
+      const response = await signup(signupValues)
 
-      if (success) {
+      if (response.kind === 'error') {
+        toastError(response.err)
+        return
+      }
+
+      const responseToken = await verifyToken()
+
+      if (responseToken.kind === 'ok') {
+        updateAuth(responseToken.result.data)
         router.push('/')
       }
     })
   }
 
   return (
-    <div className="flex h-screen-minus-header items-center justify-center sm:bg-gradient-to-br via-background from-background to-muted">
+    <main className="flex items-center w-full py-4 px-2 min-h-screen-minus-header justify-center sm:bg-gradient-to-br via-background from-background to-muted">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Criar conta</CardTitle>
@@ -103,6 +115,25 @@ const SignupPage = () => {
               </div>
               <FormField
                 control={form.control}
+                name="birthDate"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Data de nascimento</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="date"
+                        {...field}
+                        autoComplete="bday"
+                        placeholder="dd/mm/aaaa"
+                        max={new Date().toISOString().split('T')[0]}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="email"
                 render={({ field }) => (
                   <FormItem>
@@ -126,13 +157,11 @@ const SignupPage = () => {
                   <FormItem>
                     <FormLabel>Senha</FormLabel>
                     <FormControl>
-                      <Input
-                        type="password"
+                      <NewPasswordInput
                         {...field}
                         autoComplete="new-password"
                       />
                     </FormControl>
-                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -170,7 +199,7 @@ const SignupPage = () => {
           </Link>
         </CardFooter>
       </Card>
-    </div>
+    </main>
   )
 }
 

@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { verifyToken } from './lib/auth/fetch'
+import { validateAccountToken } from './lib/auth/server-only'
 
-const protectedRoutes = new Set([] as string[])
+// Middleware currently only supports the Edge runtime. The Node.js runtime can not be used.
+
+const protectedRoutes = new Set(['/me', '/admin/dashboard', '/admin/products'])
 const registerRoutes = new Set(['/signup', '/login'])
 
 export default async function middleware(req: NextRequest) {
@@ -13,7 +15,9 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.next()
   }
 
-  const authorized = await verifyToken()
+  const account = await validateAccountToken()
+
+  const authorized = !!account
 
   if (isProtectedRoute && !authorized) {
     const loginUrl = new URL('/login', req.nextUrl)
@@ -23,7 +27,7 @@ export default async function middleware(req: NextRequest) {
   }
 
   if (isRegisterRoute && authorized) {
-    return NextResponse.redirect('/')
+    return NextResponse.redirect(new URL('/', req.nextUrl))
   }
 
   return NextResponse.next()

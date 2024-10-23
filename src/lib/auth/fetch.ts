@@ -1,41 +1,39 @@
 import apiClient from '../axios'
+import { handleErrors } from '../shared/error-handling'
 import { Authenticate, Account, CreateAccount } from './types'
 
-export const login = async (
-  auth: Authenticate,
-): Promise<Account | undefined> => {
-  try {
-    const response = await apiClient.post('/login', auth)
-    return response.data
-  } catch (error) {
-    console.error('Login error:', error)
-  }
-}
+export const login = async (auth: Authenticate) =>
+  handleErrors(
+    apiClient.post<undefined>('/public-api/v1/authentication/login', auth),
+  )
 
-export const signup = async (
-  account: CreateAccount,
-): Promise<Account | undefined> => {
-  try {
-    const response = await apiClient.post('/signup', account)
-    return response.data
-  } catch (error) {
-    console.error('Signup error:', error)
-  }
-}
+export const signup = async (createAccount: CreateAccount) =>
+  handleErrors(
+    apiClient.post<undefined>(
+      '/public-api/v1/authentication/signup',
+      createAccount,
+    ),
+  )
 
-export const verifyToken = async (): Promise<Account | undefined> => {
-  try {
-    const response = await apiClient.post('/verify-token')
-    return response.data
-  } catch (error) {
-    console.error('Token verification error:', error)
-  }
-}
+export const verifyToken = async (token?: string) =>
+  handleErrors(
+    apiClient.get<Account>('/api/v1/authentication/user-info', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }),
+  )
 
-export const logout = async (): Promise<void> => {
-  try {
-    await apiClient.post('/logout')
-  } catch (error) {
-    console.error('Logout error:', error)
-  }
-}
+export const edgeVerifyToken = async (token?: string) =>
+  handleErrors<Account>(
+    fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/api/v1/authentication/user-info`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+      },
+    ).then((res) => res.json()),
+  )
