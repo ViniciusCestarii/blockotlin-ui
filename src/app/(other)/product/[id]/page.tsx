@@ -78,7 +78,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {formatPrice(product.price)}
             </div>
           </div>
-          <AddToCartButton productId={params.id} />
+          <AddToCartButton productId={Number(params.id)} />
         </div>
       </div>
       <div className="mt-12 md:mt-16 lg:mt-20 grid gap-8 lg:gap-12">
