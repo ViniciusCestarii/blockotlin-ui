@@ -21,7 +21,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useTransition } from 'react'
 import { signupSchema } from '@/lib/auth/schemas'
 import { signup, verifyToken } from '@/lib/auth/fetch'
@@ -30,6 +30,8 @@ import { SignupFormType } from '@/lib/auth/types'
 
 const SignupPage = () => {
   const { updateAuth } = useAuth()
+
+  const searchParams = useSearchParams()
   const router = useRouter()
 
   const [isPending, startTransition] = useTransition()
@@ -60,7 +62,8 @@ const SignupPage = () => {
 
       if (responseToken.kind === 'ok') {
         updateAuth(responseToken.result.data)
-        router.push('/')
+        const next = searchParams.get('next')
+        router.push(next ?? '/')
       }
     })
   }

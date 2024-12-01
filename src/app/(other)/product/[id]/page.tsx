@@ -9,6 +9,7 @@ import MainContainer from '@/components/system/main-container'
 import EditProductDialog from '@/components/product/edit-product-dialog'
 import AdminOnly from '@/components/system/admin-only'
 import TypographyH2 from '@/components/ui/typography-h2'
+import AddToCartButton from './add-to-cart-button'
 
 interface ProductPageProps {
   params: {
@@ -77,9 +78,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
               {formatPrice(product.price)}
             </div>
           </div>
-          <Button size="lg" className="w-full">
-            Adicionar ao carrinho
-          </Button>
+          <AddToCartButton productId={params.id} />
         </div>
       </div>
       <div className="mt-12 md:mt-16 lg:mt-20 grid gap-8 lg:gap-12">
