@@ -22,6 +22,18 @@ const ShopCart = () => {
   const [cart, setCart] = useState<CartProduct[]>([])
   const [isLoading, setIsLoading] = React.useState(true)
 
+  const handleFinishPurchase = async () => {
+    // for the sake of simplicity, we are not handling the actual purchase
+    cart.forEach(async (item) => {
+      await setProductCart({ productId: item.id, quantity: 0 })
+    })
+    setCart([])
+    toast.success('Compra finalizada com sucesso!', {
+      description:
+        'Obrigado por comprar conosco! Seu pedido será entregue em breve',
+    })
+  }
+
   const changeProductQuantity = async (productId: number, quantity: number) => {
     const response = await setProductCart({ productId, quantity })
 
@@ -83,7 +95,7 @@ const ShopCart = () => {
     <div className="grid md:grid-cols-[1fr_320px] gap-8">
       <div className="flex flex-col gap-4">
         {isLoading &&
-          Array.from({ length: 2 }, (_, i) => (
+          Array.from({ length: 1 }, (_, i) => (
             <Skeleton key={i} className="h-36" />
           ))}
         {cart.length === 0 && !isLoading && (
@@ -242,7 +254,12 @@ const ShopCart = () => {
             </div>
           </CardContent>
         </Card>
-        <Button size="lg" className="w-full">
+        <Button
+          disabled={cart.length === 0}
+          onClick={handleFinishPurchase}
+          size="lg"
+          className="w-full"
+        >
           Finalizar Compra
         </Button>
       </div>
