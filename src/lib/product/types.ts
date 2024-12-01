@@ -15,7 +15,7 @@ export type CartProduct = Product & {
 
 export type CreateProduct = Omit<Product, 'id'>
 
-export type AddProductToCart = {
+export type SetProductCart = {
   productId: Product['id']
   quantity: number
 }

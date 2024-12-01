@@ -10,7 +10,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { useAuth } from '@/context/auth-context'
-import { addProductToCart } from '@/lib/product/fetch'
+import { setProductCart } from '@/lib/product/fetch'
 import { ShoppingBasket } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -37,7 +37,7 @@ const AddToCartButton = (props: AddToCartButtonProps) => {
 const ClientAddToCartButton = (props: AddToCartButtonProps) => {
   const router = useRouter()
   const handleButtonClick = async () => {
-    const response = await addProductToCart({
+    const response = await setProductCart({
       ...props,
       quantity: 1,
     })

@@ -1,7 +1,7 @@
 import apiClient from '../axios'
 import { handleErrors } from '../shared/error-handling'
 import {
-  AddProductToCart,
+  SetProductCart,
   CartProduct,
   CreateProduct,
   Product,
@@ -47,5 +47,5 @@ export const createProduct = async (product: CreateProduct) =>
 export const updateProduct = async ({ id, ...productRest }: Product) =>
   handleErrors(apiClient.put<Product>(`/api/v1/product/${id}`, productRest))
 
-export const addProductToCart = async (body: AddProductToCart) =>
+export const setProductCart = async (body: SetProductCart) =>
   handleErrors(apiClient.put(`/api/v1/cart/user`, body))

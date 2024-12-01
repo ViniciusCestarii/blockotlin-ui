@@ -6,31 +6,58 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Separator } from '@/components/ui/separator'
-import { fetchUserCart } from '@/lib/product/fetch'
+import { Skeleton } from '@/components/ui/skeleton'
+import { setProductCart, fetchUserCart } from '@/lib/product/fetch'
 import { CartProduct } from '@/lib/product/types'
-import { MinusIcon, PlusIcon, TrashIcon } from 'lucide-react'
+import { MinusIcon, PlusIcon, ShoppingCart, TrashIcon } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
+// here it would be better to use react-query to handle the cart state
+
 const ShopCart = () => {
   const [cart, setCart] = useState<CartProduct[]>([])
-  const [isPending, startTransition] = React.useTransition()
+  const [isLoading, setIsLoading] = React.useState(true)
+
+  const changeProductQuantity = async (productId: number, quantity: number) => {
+    const response = await setProductCart({ productId, quantity })
+
+    if (response.kind === 'error') {
+      toast.error('Erro ao atualizar a quantidade do produto')
+      return
+    }
+
+    setCart(
+      cart.flatMap((item) => {
+        if (item.id === productId && quantity === 0) {
+          return []
+        }
+
+        if (item.id === productId) {
+          return { ...item, quantity }
+        }
+
+        return item
+      }),
+    )
+  }
 
   useEffect(() => {
     const getUserCart = async () => {
-      startTransition(async () => {
-        const response = await fetchUserCart()
+      setIsLoading(true)
+      const response = await fetchUserCart()
 
-        if (response.kind === 'error') {
-          // this page should have redirected on the middleware
-          toast.error('Erro ao carregar informações do usuário')
-          redirect('/login')
-        }
+      if (response.kind === 'error') {
+        // this page should have redirected on the middleware
+        toast.error('Erro ao carregar informações do usuário')
+        redirect('/login')
+      }
 
-        setCart(response.result.data.products)
-      })
+      setCart(response.result.data.products)
+      setIsLoading(false)
     }
 
     getUserCart()
@@ -45,40 +72,67 @@ const ShopCart = () => {
       setDiscount(0)
     }
   }
-  const handleQuantityChange = (id: number, quantity: number) => {
-    setCart(cart.map((item) => (item.id === id ? { ...item, quantity } : item)))
-  }
+
   const handleRemoveItem = (id: number) => {
-    setCart(cart.filter((item) => item.id !== id))
+    changeProductQuantity(id, 0)
   }
 
   const total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0)
   const totalWithDiscount = total - total * (discount / 100)
   return (
     <div className="grid md:grid-cols-[1fr_320px] gap-8">
-      <div className="grid gap-4">
+      <div className="flex flex-col gap-4">
+        {isLoading &&
+          Array.from({ length: 2 }, (_, i) => (
+            <Skeleton key={i} className="h-36" />
+          ))}
+        {cart.length === 0 && !isLoading && (
+          <div className="flex flex-col md:flex-row items-center gap-4 bg-muted/20 rounded-lg p-4 md:max-h-36">
+            <ShoppingCart className="size-32" />
+
+            <div className="flex-col space-y-4 text-center md:text-start">
+              <div className="text-lg font-semibold">
+                Seu carrinho está vazio
+              </div>
+              <p className="text-center md:text-start">
+                Sua sacola está vazia Vá para a{' '}
+                <Link className="underline" href="/">
+                  página inicial
+                </Link>{' '}
+                ou procure no site os produtos que vão te deixar feliz. Quando
+                encontrá-los, clique no botão adicionar ao carrinho ;)
+              </p>
+            </div>
+          </div>
+        )}
         {cart.map((item) => (
           <div
             key={item.id}
-            className="flex items-center gap-4 bg-muted/20 rounded-lg p-4"
+            className="flex items-center gap-4 bg-muted/20 rounded-lg p-4 h-36"
           >
-            <Image
-              src={item.image}
-              alt={item.name}
-              width={80}
-              height={80}
-              className="rounded-md object-cover"
-              style={{ aspectRatio: '80/80', objectFit: 'cover' }}
-            />
+            <Link href={`/product/${item.id}`}>
+              <Image
+                src={item.image}
+                alt={item.name}
+                width={80}
+                height={80}
+                className="rounded-md object-cover"
+                style={{ aspectRatio: '80/80', objectFit: 'cover' }}
+              />
+            </Link>
             <div className="flex-1 grid gap-1">
-              <h3 className="font-medium">{item.name}</h3>
+              <h3 className="font-medium">
+                <Link className="hover:underline" href={`/product/${item.id}`}>
+                  {item.name}
+                </Link>
+              </h3>
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
                   size="icon"
                   className="h-8 w-8"
                   onClick={() =>
-                    handleQuantityChange(item.id, item.quantity - 1)
+                    changeProductQuantity(item.id, item.quantity - 1)
                   }
                   disabled={item.quantity <= 1}
                 >
@@ -90,7 +144,7 @@ const ShopCart = () => {
                   size="icon"
                   className="h-8 w-8"
                   onClick={() =>
-                    handleQuantityChange(item.id, item.quantity + 1)
+                    changeProductQuantity(item.id, item.quantity + 1)
                   }
                 >
                   <PlusIcon className="h-4 w-4" />
