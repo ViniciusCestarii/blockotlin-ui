@@ -9,7 +9,16 @@ export type Product = {
   image: string
 }
 
+export type CartProduct = Product & {
+  quantity: number
+}
+
 export type CreateProduct = Omit<Product, 'id'>
+
+export type AddProductToCart = {
+  productId: Product['id']
+  quantity: number
+}
 
 export type ProductListResponse = {
   products: Product[]

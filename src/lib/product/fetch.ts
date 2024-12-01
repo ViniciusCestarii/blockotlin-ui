@@ -1,6 +1,12 @@
 import apiClient from '../axios'
 import { handleErrors } from '../shared/error-handling'
-import { CreateProduct, Product, ProductListResponse } from './types'
+import {
+  AddProductToCart,
+  CartProduct,
+  CreateProduct,
+  Product,
+  ProductListResponse,
+} from './types'
 import React from 'react'
 
 export const fetchProducts = React.cache(async (search?: string) => {
@@ -26,6 +32,13 @@ export const fetchProduct = React.cache(async (id: string) => {
   } catch (error) {}
 })
 
+export const fetchUserCart = async () =>
+  handleErrors(
+    apiClient.get<{
+      products: CartProduct[]
+    }>(`/api/v1/cart/user`),
+  )
+
 export const createProduct = async (product: CreateProduct) =>
   handleErrors(
     apiClient.post<Product>('/api/v1/product/create-product', product),
@@ -33,3 +46,6 @@ export const createProduct = async (product: CreateProduct) =>
 
 export const updateProduct = async ({ id, ...productRest }: Product) =>
   handleErrors(apiClient.put<Product>(`/api/v1/product/${id}`, productRest))
+
+export const addProductToCart = async (body: AddProductToCart) =>
+  handleErrors(apiClient.put(`/api/v1/cart/user`, body))

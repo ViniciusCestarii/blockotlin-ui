@@ -6,33 +6,35 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Separator } from '@/components/ui/separator'
+import { fetchUserCart } from '@/lib/product/fetch'
+import { CartProduct } from '@/lib/product/types'
 import { MinusIcon, PlusIcon, TrashIcon } from 'lucide-react'
-import React, { useState } from 'react'
+import Image from 'next/image'
+import { redirect } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 const ShopCart = () => {
-  const [cart, setCart] = useState([
-    {
-      id: 1,
-      name: 'Camiseta Básica',
-      image: '/placeholder.svg',
-      quantity: 2,
-      price: 29.99,
-    },
-    {
-      id: 2,
-      name: 'Calça Jeans',
-      image: '/placeholder.svg',
-      quantity: 1,
-      price: 59.99,
-    },
-    {
-      id: 3,
-      name: 'Tênis Esportivo',
-      image: '/placeholder.svg',
-      quantity: 1,
-      price: 79.99,
-    },
-  ])
+  const [cart, setCart] = useState<CartProduct[]>([])
+  const [isPending, startTransition] = React.useTransition()
+
+  useEffect(() => {
+    const getUserCart = async () => {
+      startTransition(async () => {
+        const response = await fetchUserCart()
+
+        if (response.kind === 'error') {
+          // this page should have redirected on the middleware
+          toast.error('Erro ao carregar informações do usuário')
+          redirect('/login')
+        }
+
+        setCart(response.result.data.products)
+      })
+    }
+
+    getUserCart()
+  }, [])
   const [coupon, setCoupon] = useState('')
   const [discount, setDiscount] = useState(0)
   const handleCouponChange = (value: string) => {
@@ -60,8 +62,8 @@ const ShopCart = () => {
             key={item.id}
             className="flex items-center gap-4 bg-muted/20 rounded-lg p-4"
           >
-            <img
-              src="/placeholder.svg"
+            <Image
+              src={item.image}
               alt={item.name}
               width={80}
               height={80}
