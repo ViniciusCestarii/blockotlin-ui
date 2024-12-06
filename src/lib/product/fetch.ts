@@ -20,7 +20,7 @@ export const fetchProducts = React.cache(async (search?: string) => {
       },
       credentials: 'include',
       next: {
-        revalidate: 0.5, // would be better to use revalidate using triggers like revalidateTag or revalidatePath
+        revalidate: 0, // would be better to use revalidate using triggers like revalidateTag or revalidatePath
       },
     },
   )
@@ -43,7 +43,7 @@ export const fetchProduct = React.cache(async (id: string) => {
       },
       credentials: 'include',
       next: {
-        revalidate: 0.5,
+        revalidate: 0,
       },
     },
   )
