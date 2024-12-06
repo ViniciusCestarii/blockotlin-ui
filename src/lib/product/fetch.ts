@@ -19,6 +19,9 @@ export const fetchProducts = React.cache(async (search?: string) => {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
+      next: {
+        revalidate: 0.5, // would be better to use revalidate using triggers like revalidateTag or revalidatePath
+      },
     },
   )
 
@@ -39,6 +42,9 @@ export const fetchProduct = React.cache(async (id: string) => {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
+      next: {
+        revalidate: 0.5,
+      },
     },
   )
 
