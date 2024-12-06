@@ -10,26 +10,44 @@ import {
 import React from 'react'
 
 export const fetchProducts = React.cache(async (search?: string) => {
-  try {
-    const response = await apiClient<ProductListResponse>(
-      '/public-api/v1/product',
-      {
-        params: {
-          name: search,
-        },
+  const query = search ? `?name=${encodeURIComponent(search)}` : ''
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-api/v1/product${query}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
       },
-    )
+      credentials: 'include',
+    },
+  )
 
-    return response.data.products
-  } catch (error) {}
+  if (!response.ok) {
+    throw new Error('Failed to fetch products')
+  }
+
+  const data: ProductListResponse = await response.json()
+  return data.products
 })
 
 export const fetchProduct = React.cache(async (id: string) => {
-  try {
-    const response = await apiClient<Product>(`/public-api/v1/product/${id}`)
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/public-api/v1/product/${id}`,
+    {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    },
+  )
 
-    return response.data
-  } catch (error) {}
+  if (!response.ok) {
+    throw new Error(`Failed to fetch product with ID ${id}`)
+  }
+
+  const data: Product = await response.json()
+  return data
 })
 
 export const fetchUserCart = async () =>
